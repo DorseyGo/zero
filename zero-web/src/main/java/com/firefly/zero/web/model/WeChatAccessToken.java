@@ -8,9 +8,14 @@ package com.firefly.zero.web.model;
 
 import java.util.Date;
 
+/**
+ * The <tt>access token</tt> resource.
+ *
+ * @author DorSey
+ */
 public class WeChatAccessToken {
 
-    private String uuid;
+    private String wechatAccount;
     private String accessToken;
     private Date createTime;
     private Date lastModifiedTime;
@@ -23,22 +28,22 @@ public class WeChatAccessToken {
     }
 
     /**
-     * Constructor of {@link WeChatAccessToken}, with uuid and access token specified.
+     * Constructor of {@link WeChatAccessToken}, with wechat account and its access token specified.
      *
-     * @param uuid
-     * @param accessToken
+     * @param wechatAccount the wechat account.
+     * @param accessToken the access token.
      */
-    public WeChatAccessToken(final String uuid, final String accessToken) {
-        this.uuid = uuid;
+    public WeChatAccessToken(final String wechatAccount, final String accessToken) {
+        this.wechatAccount = wechatAccount;
         this.accessToken = accessToken;
     }
 
-    public String getUuid() {
-        return uuid;
+    public String getWechatAccount() {
+        return wechatAccount;
     }
 
-    public void setUuid(final String uuid) {
-        this.uuid = uuid;
+    public void setWechatAccount(final String wechatAccount) {
+        this.wechatAccount = wechatAccount;
     }
 
     public String getAccessToken() {
@@ -72,7 +77,7 @@ public class WeChatAccessToken {
 
         WeChatAccessToken that = (WeChatAccessToken) o;
 
-        if (uuid != null ? !uuid.equals(that.uuid) : that.uuid != null) return false;
+        if (wechatAccount != null ? !wechatAccount.equals(that.wechatAccount) : that.wechatAccount != null) return false;
         if (accessToken != null ? !accessToken.equals(that.accessToken) : that.accessToken != null) return false;
         if (createTime != null ? !createTime.equals(that.createTime) : that.createTime != null) return false;
         return lastModifiedTime != null ? lastModifiedTime
@@ -81,7 +86,7 @@ public class WeChatAccessToken {
 
     @Override
     public int hashCode() {
-        int result = uuid != null ? uuid.hashCode() : 0;
+        int result = wechatAccount != null ? wechatAccount.hashCode() : 0;
         result = 31 * result + (accessToken != null ? accessToken.hashCode() : 0);
         result = 31 * result + (createTime != null ? createTime.hashCode() : 0);
         result = 31 * result + (lastModifiedTime != null ? lastModifiedTime.hashCode() : 0);
@@ -91,7 +96,7 @@ public class WeChatAccessToken {
     @Override
     public String toString() {
         return "WeChatAccessToken{" +
-                "uuid='" + uuid + '\'' +
+                "wechatAccount='" + wechatAccount + '\'' +
                 ", accessToken='" + accessToken + '\'' +
                 ", createTime=" + createTime +
                 ", lastModifiedTime=" + lastModifiedTime +

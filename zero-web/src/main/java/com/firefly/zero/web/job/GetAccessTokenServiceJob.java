@@ -6,6 +6,7 @@
  */
 package com.firefly.zero.web.job;
 
+import com.firefly.zero.web.config.ZeroWebConfig;
 import com.firefly.zero.web.model.WeChatAccessToken;
 import com.firefly.zero.web.service.AccessTokenManager;
 import com.firefly.zero.web.service.WeChatAccessTokenService;
@@ -26,13 +27,16 @@ public class GetAccessTokenServiceJob extends QuartzJobBean {
 
     private final AccessTokenManager accessTokenManager;
     private final WeChatAccessTokenService weChatAccessTokenService;
+    private final ZeroWebConfig zeroWebConfig;
 
     @Autowired
     public GetAccessTokenServiceJob(
             @Qualifier("accessTokenManager") final AccessTokenManager accessTokenManager,
-            @Qualifier("wechatAccessTokenService") final WeChatAccessTokenService weChatAccessTokenService) {
+            @Qualifier("wechatAccessTokenService") final WeChatAccessTokenService weChatAccessTokenService,
+            final ZeroWebConfig zeroWebConfig) {
         this.accessTokenManager = accessTokenManager;
         this.weChatAccessTokenService = weChatAccessTokenService;
+        this.zeroWebConfig = zeroWebConfig;
     }
 
     @Override
@@ -40,17 +44,13 @@ public class GetAccessTokenServiceJob extends QuartzJobBean {
         final String accessToken = accessTokenManager.getAccessToken();
         logger.debug("Access token obtained is {}", accessToken);
 
-        final List<WeChatAccessToken> wechatAccessTokens = weChatAccessTokenService.getAllAccessTokens();
-        WeChatAccessToken weChatAccessToken = null;
-        if (wechatAccessTokens == null || wechatAccessTokens.isEmpty()) {
-            final String uuid = UUID.randomUUID().toString();
-            weChatAccessToken = new WeChatAccessToken(uuid, accessToken);
-
-            weChatAccessTokenService.saveWeChatAccessToken(weChatAccessToken);
+        if (weChatAccessTokenService.getWeChatAccessTokenByAccount(zeroWebConfig.getWechatAccount()) == null) {
+            // not exists
+            weChatAccessTokenService
+                    .saveWeChatAccessToken(new WeChatAccessToken(zeroWebConfig.getWechatAccount(), accessToken));
             return;
         }
 
-        weChatAccessToken = wechatAccessTokens.get(0);
-        weChatAccessTokenService.updateAccessToken(weChatAccessToken.getUuid(), accessToken);
+        weChatAccessTokenService.updateAccessToken(zeroWebConfig.getWechatAccount(), accessToken);
     }
 }

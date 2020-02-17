@@ -9,5 +9,5 @@ package com.firefly.zero.web.service;
 import com.firefly.zero.web.model.WeChatGlobalConfig;
 
 public interface WeChatGlobalConfigService {
-    WeChatGlobalConfig getWechatGlobalConfig();
+    WeChatGlobalConfig getWechatGlobalConfig(final String wechatAccount);
 }

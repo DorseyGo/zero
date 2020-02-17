@@ -13,7 +13,9 @@ import java.util.List;
 public interface WeChatAccessTokenService {
     void saveWeChatAccessToken(final WeChatAccessToken weChatAccessToken);
 
-    void updateAccessToken(final String uuid, final String accessToken);
+    void updateAccessToken(final String wechatAccount, final String accessToken);
 
-    List<WeChatAccessToken> getAllAccessTokens();
+    String getAccessTokenByAccount(final String wechatAccount);
+
+    WeChatAccessToken getWeChatAccessTokenByAccount(final String account);
 }

@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+  <meta charset="UTF-8">
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no" name="viewport">
+  <title>Dashboard &mdash; Zero</title>
+
+  <link rel="stylesheet" th:href="@{/static/modules/bootstrap/css/bootstrap.min.css}">
+  <link rel="stylesheet" th:href="@{/static/modules/ionicons/css/ionicons.min.css}">
+  <link rel="stylesheet" th:href="@{/static/modules/fontawesome/web-fonts-with-css/css/fontawesome-all.min.css}">
+
+  <link rel="stylesheet" th:href="@{/static/modules/summernote/summernote-lite.css}">
+  <link rel="stylesheet" th:href="@{/static/modules/flag-icon-css/css/flag-icon.min.css}">
+  <link rel="stylesheet" th:href="@{/static/css/demo.css}">
+  <link rel="stylesheet" th:href="@{/static/css/style.css}">
+</head>
+
+<body>
+  <div id="app">
+    <div class="main-wrapper">
+      <div class="navbar-bg"></div>
+      <nav class="navbar navbar-expand-lg main-navbar">
+        <form class="form-inline mr-auto">
+          <ul class="navbar-nav mr-3">
+            <li><a href="#" data-toggle="sidebar" class="nav-link nav-link-lg"><i class="ion ion-navicon-round"></i></a></li>
+            <li><a href="#" data-toggle="search" class="nav-link nav-link-lg d-sm-none"><i class="ion ion-search"></i></a></li>
+          </ul>
+        </form>
+        <ul class="navbar-nav navbar-right">
+          <li class="dropdown dropdown-list-toggle"><a href="#" data-toggle="dropdown" class="nav-link notification-toggle nav-link-lg beep"><i class="ion ion-ios-bell-outline"></i></a>
+            <div class="dropdown-menu dropdown-list dropdown-menu-right">
+              <div class="dropdown-header">通知
+                <div class="float-right">
+                  <a href="#">View All</a>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li class="dropdown"><a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg">
+            <i class="ion ion-android-person d-lg-none"></i>
+            <div class="d-sm-none d-lg-inline-block" sec:authentication="name"></div></a>
+            <div class="dropdown-menu dropdown-menu-right">
+              <a href="${/user/profile}" class="dropdown-item has-icon">
+                <i class="ion ion-android-person"></i> 隐私
+              </a>
+              <a href="#" class="dropdown-item has-icon">
+                <i class="ion ion-log-out"></i> 登出
+              </a>
+            </div>
+          </li>
+        </ul>
+      </nav>
+      <div class="main-sidebar">
+        <aside id="sidebar-wrapper">
+          <div class="sidebar-brand">
+            <a th:href="@{/index}">Zero Admin</a>
+          </div>
+          <div class="sidebar-user">
+            <div class="sidebar-user-picture">
+              <img alt="image" th:src="@{/static/img/avatar/avatar-1.jpeg}">
+            </div>
+            <div class="sidebar-user-details">
+                <div class="user-name" sec:authentication="name"></div>
+                <div class="user-role" th:text="${#strings.substring(#authentication.principal.authorities,
+                    #strings.indexOf(#authentication.principal.authorities, '_') + 1, #strings.length(#authentication.principal.authorities) - 1)}"></div>
+            </div>
+          </div>
+          <ul class="sidebar-menu">
+            <li class="menu-header">仪表盘</li>
+            <li class="active">
+              <a th:href="@{/index}"><i class="ion ion-speedometer"></i><span>仪表盘</span></a>
+            </li>
+
+            <li class="menu-header">粉丝管理</li>
+            <li>
+              <a href="#" class="has-dropdown"><i class="ion ion-person-stalker"></i><span>粉丝管理</span></a>
+              <ul class="menu-dropdown">
+                <li><a href="general.html"><i class="ion ion-person"></i>粉丝信息</a></li>
+                <li><a href="components.html"><i class="ion ion-briefcase"></i> 分组管理</a></li>
+              </ul>
+            </li>
+            <li>
+              <a href="#" class="has-dropdown"><i class="ion ion-ios-list-outline"></i><span>自定义菜单管理</span></a>
+              <ul class="menu-dropdown">
+                <li><a href="ion-icons.html"><i class="ion ion-grid"></i> 菜单列表 </a></li>
+              </ul>
+            </li>
+              <li>
+                  <a href="#" class="has-dropdown"><i class="ion ion-chatbubbles"></i><span>消息管理</span></a>
+                  <ul class="menu-dropdown">
+                      <li><a href="ion-icons.html"><i class="ion ion-grid"></i>消息列表</a></li>
+                      <li><a href="ion-icons.html"><i class="ion ion-chatbox-working"></i>分组群发</a></li>
+                  </ul>
+              </li>
+              <li>
+                  <a href="#" class="has-dropdown"><i class="ion ion-images"></i><span>素材管理</span></a>
+                  <ul class="menu-dropdown">
+                      <li><a href="ion-icons.html"><i class="ion ion-image"></i>图片管理</a></li>
+                      <li><a href="ion-icons.html"><i class="ion ion-paintbucket"></i>图文管理</a></li>
+                  </ul>
+              </li>
+          </ul>
+        </aside>
+      </div>
+      <div class="main-content">
+        <section class="section">
+          <h1 class="section-header">
+            <div>仪表盘</div>
+          </h1>
+          <div class="row">
+            <div class="col-lg-3 col-md-6 col-12">
+              <div class="card card-sm-3">
+                <div class="card-icon bg-primary">
+                  <i class="ion ion-person"></i>
+                </div>
+                <div class="card-wrap">
+                  <div class="card-header">
+                    <h4>粉丝数</h4>
+                  </div>
+                  <div class="card-body">
+                    10
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-12">
+              <div class="card card-sm-3">
+                <div class="card-icon bg-danger">
+                  <i class="ion ion-ios-paper-outline"></i>
+                </div>
+                <div class="card-wrap">
+                  <div class="card-header">
+                    <h4>自定义菜单数</h4>
+                  </div>
+                  <div class="card-body">
+                    42
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-12">
+              <div class="card card-sm-3">
+                <div class="card-icon bg-warning">
+                  <i class="ion ion-ios-chatboxes-outline"></i>
+                </div>
+                <div class="card-wrap">
+                  <div class="card-header">
+                    <h4>消息数</h4>
+                  </div>
+                  <div class="card-body">
+                    1,201
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-12">
+              <div class="card card-sm-3">
+                <div class="card-icon bg-success">
+                  <i class="ion ion-record"></i>
+                </div>
+                <div class="card-wrap">
+                  <div class="card-header">
+                    <h4>Online Users</h4>
+                  </div>
+                  <div class="card-body">
+                    47
+                  </div>
+                </div>
+              </div>
+            </div>                  
+          </div>
+          <div class="row">
+            <div class="col-lg-8 col-md-12 col-12 col-sm-12">
+              <div class="card">
+                <div class="card-header">
+                  <div class="float-right">
+                    <div class="btn-group">
+                      <a href="#" class="btn active">Week</a>
+                      <a href="#" class="btn">Month</a>
+                      <a href="#" class="btn">Year</a>
+                    </div>
+                  </div>
+                  <h4>Statistics</h4>
+                </div>
+                <div class="card-body">
+                  <canvas id="myChart" height="158"></canvas>
+                  <div class="statistic-details mt-sm-4">
+                    <div class="statistic-details-item">
+                      <small class="text-muted"><span class="text-primary"><i class="ion-arrow-up-b"></i></span> 7%</small>
+                      <div class="detail-value">$243</div>
+                      <div class="detail-name">Today's Sales</div>
+                    </div>
+                    <div class="statistic-details-item">
+                      <small class="text-muted"><span class="text-danger"><i class="ion-arrow-down-b"></i></span> 23%</small>
+                      <div class="detail-value">$2,902</div>
+                      <div class="detail-name">This Week's Sales</div>
+                    </div>
+                    <div class="statistic-details-item">
+                      <small class="text-muted"><span class="text-primary"><i class="ion-arrow-up-b"></i></span>9%</small>
+                      <div class="detail-value">$12,821</div>
+                      <div class="detail-name">This Month's Sales</div>
+                    </div>
+                    <div class="statistic-details-item">
+                      <small class="text-muted"><span class="text-primary"><i class="ion-arrow-up-b"></i></span> 19%</small>
+                      <div class="detail-value">$92,142</div>
+                      <div class="detail-name">This Year's Sales</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-12 col-12 col-sm-12">
+              <div class="card">
+                <div class="card-header">
+                  <h4>Recent Activities</h4>
+                </div>
+                <div class="card-body">             
+                  <ul class="list-unstyled list-unstyled-border">
+                    <li class="media">
+                      <img class="mr-3 rounded-circle" width="50" src="../dist/img/avatar/avatar-1.jpeg" alt="avatar">
+                      <div class="media-body">
+                        <div class="float-right"><small>10m</small></div>
+                        <div class="media-title">Farhan A Mujib</div>
+                        <small>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin.</small>
+                      </div>
+                    </li>
+                    <li class="media">
+                      <img class="mr-3 rounded-circle" width="50" src="../dist/img/avatar/avatar-2.jpeg" alt="avatar">
+                      <div class="media-body">
+                        <div class="float-right"><small>10m</small></div>
+                        <div class="media-title">Ujang Maman</div>
+                        <small>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin.</small>
+                      </div>
+                    </li>
+                    <li class="media">
+                      <img class="mr-3 rounded-circle" width="50" src="../dist/img/avatar/avatar-3.jpeg" alt="avatar">
+                      <div class="media-body">
+                        <div class="float-right"><small>10m</small></div>
+                        <div class="media-title">Rizal Fakhri</div>
+                        <small>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin.</small>
+                      </div>
+                    </li>
+                    <li class="media">
+                      <img class="mr-3 rounded-circle" width="50" src="../dist/img/avatar/avatar-4.jpeg" alt="avatar">
+                      <div class="media-body">
+                        <div class="float-right"><small>10m</small></div>
+                        <div class="media-title">Alfa Zulkarnain</div>
+                        <small>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin.</small>
+                      </div>
+                    </li>
+                  </ul>
+                  <div class="text-center">
+                    <a href="#" class="btn btn-primary btn-round">
+                      View All
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+      <footer class="main-footer">
+        <div class="footer-left">
+            Copyright &copy; 2020 ZERO
+            <div class="footer-right"></div>
+        </div>
+      </footer>
+    </div>
+  </div>
+
+  <script th:src="@{/static/modules/jquery.min.js}"></script>
+  <script th:src="@{/static/modules/popper.js}"></script>
+  <script th:src="@{/static/modules/tooltip.js}"></script>
+  <script th:src="@{/static/modules/bootstrap/js/bootstrap.min.js}"></script>
+  <script th:src="@{/static/modules/nicescroll/jquery.nicescroll.min.js}"></script>
+  <script th:src="@{/static/modules/scroll-up-bar/dist/scroll-up-bar.min.js}"></script>
+  <script th:src="@{/static/js/sa-functions.js}"></script>
+  
+  <script th:src="@{/static/modules/chart.min.js}"></script>
+  <script th:src="@{/static/modules/summernote/summernote-lite.js}"></script>
+
+  <script>
+  var ctx = document.getElementById("myChart").getContext('2d');
+  var myChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+      datasets: [{
+        label: 'Statistics',
+        data: [460, 458, 330, 502, 430, 610, 488],
+        borderWidth: 2,
+        backgroundColor: 'rgb(87,75,144)',
+        borderColor: 'rgb(87,75,144)',
+        borderWidth: 2.5,
+        pointBackgroundColor: '#ffffff',
+        pointRadius: 4
+      }]
+    },
+    options: {
+      legend: {
+        display: false
+      },
+      scales: {
+        yAxes: [{
+          ticks: {
+            beginAtZero: true,
+            stepSize: 150
+          }
+        }],
+        xAxes: [{
+          gridLines: {
+            display: false
+          }
+        }]
+      },
+    }
+  });
+  </script>
+  <script th:src="@{/static/js/scripts.js}"></script>
+  <script th:src="@{/static/js/custom.js}"></script>
+  <script th:src="@{/static/js/demo.js}"></script>
+</body>
+</html>

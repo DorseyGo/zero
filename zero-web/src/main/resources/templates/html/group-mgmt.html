@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no"
+          name="viewport">
+    <title>Fans &rsaquo; Group &mdash; ZERO</title>
+
+</head>
+
+<body>
+<div>
+    <section class="section">
+        <h1 class="section-header">
+            <div>分组</div>
+        </h1>
+        <div class="section-body">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4>分组列表</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table id="group" class="table table-striped table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>id</th>
+                                            <th>组名称</th>
+                                            <th>粉丝数量</th>
+                                            <th>创建时间</th>
+                                            <th>最后一次更新时间</th>
+                                            <th>操作</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- dialogs -->
+                        <div id="confirm_dialog" role="dialog" class="modal fade" tabindex="-1">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title" id="confirmModalLabel">提示</h4>
+                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                    </div>
+                                    <div class="modal-body">
+                                        确认要删除？<input type="hidden" id="tag_id" class="form-control" value="" >
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" id="confirm_cancel" data-dismiss="modal">取消</button>
+                                        <button type="button" class="btn btn-danger" id="confirm_delete">删除</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="edit_dialog" role="dialog" class="modal fade" tabindex="-1">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">编辑</h4>
+                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form>
+                                            <div class="control-group">
+                                                <label for="tag_name" class="control-label">组名称</label>
+                                                <div class="controls">
+                                                    <input name="name" id="tag_name" value="" class="form-control" placeholder="" required autofocus>
+                                                </div>
+                                            </div>
+                                            <input type="hidden" name="id" id="edit_tag_id" value="">
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" id="edit_cancel" data-dismiss="modal">取消</button>
+                                        <button type="button" class="btn btn-primary" id="confirm_update">更新</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<script>
+    $(function() {
+        var _parent_body = $(window.top.document.body);
+        var group = $("#group").DataTable({
+            "destroy": true,
+            "lengthMenu": [10, 20, 50],
+            "searching": true,
+            "lengthChange": true,
+            "paging": true,
+            "serverSide": true,
+            "processing": true,
+            "deferRender": true,
+            "displayStart": 0,
+            "pageLength": 10,
+            "ordering": false,
+            "ajax": {
+                "type": "POST",
+                "url": "/groups",
+            },
+            "columns": [
+                {data: "id"},
+                {data: "name"},
+                {data: "numFans"},
+                {data: "createTime"},
+                {data: "lastModifiedTime"},
+                {data: null}
+            ],
+            "columnDefs": [
+                {
+                    "targets": -1,
+                    "render": function (data, type, full, meta) {
+                        var html = "<a href='javascript:void(0)' value='"+ data.id +"' class='btn btn-sm btn-primary' data-id='"+ data.id +"' data-toggle='modal' data-target='edit_dialog'>" +
+                            "<i class='ion ion-android-open'></i>&nbsp;<span>编辑</span></a>";
+                        html += "&nbsp;&nbsp;";
+                        html += "<a href='javascript:void(0)' value='"+ data.id + "' class='btn btn-sm btn-danger' data-toggle='modal' data-target='#confirm_dialog'>" +
+                            "<i class='ion ion-android-delete'></i>&nbsp;<span>删除</span></a>";
+
+                        return html;
+                    }
+                }
+            ],
+            "language": {
+                "emptyTable": "没有找到任何数据",
+                "info": "总记录数为_TOTAL_条",
+                "lengthMenu": "显示_MENU_条",
+                "loadingRecords": "数据加载中...",
+                "loading": "加载中...",
+                "processing": "处理中...",
+                "search": "搜索：",
+                "zeroRecords": "未找到匹配的数据",
+                "paginate": {
+                    "first": "首页",
+                    "last": "尾页",
+                    "next": "下一页",
+                    "previous": "上一页"
+                }
+            }
+        });
+
+        <!-- -->
+        <!-- listen on edit button -->
+        <!-- -->
+        $("#group tbody").on('click', 'a.btn-primary', function () {
+            var _parent_tr = $(this).closest("tr");
+            var _id = _parent_tr.find("td").eq(0).text();
+            var _name = _parent_tr.find("td").eq(1).text();
+
+            $("#edit_tag_id").attr("value", _id);
+            $("#tag_name").attr("placeholder", _name);
+
+            $("#edit_dialog").appendTo(_parent_body);
+            $("#edit_dialog").modal("toggle");
+        });
+
+        function revertBack(elem_id, html) {
+            $("#" + elem_id).attr("disabled", false);
+            $("#" + elem_id).html(html);
+        }
+
+        <!-- when update button clicked -->
+        $("#confirm_update").on('click', function () {
+           var _tag_id = $("#edit_tag_id").val();
+           var _tag_name_val = $("#tag_name").val();
+           if ("undefined" === _tag_name_val || _tag_name_val == null || "" === _tag_name_val) {
+               $(this).attr("disabled", "disabled");
+               return;
+           }
+
+           $.ajax({
+              type: "POST",
+              url: "/groups/" + _tag_id,
+              data: {
+                  "name": _tag_name_val
+              },
+              dataType: "json",
+              beforeSend: function () {
+                  $(this).attr("disabled", "disabled");
+                  $(this).html("处理中...");
+              },
+              success: function (data) {
+                  revertBack("confirm_update", "更新");
+                  $("#edit_dialog").modal("toggle");
+                  group.ajax.reload();
+              },
+              error : function (data) {
+                  revertBack("confirm_update", "更新");
+                  console.error("Failed to process the request, with error: " + data.responseText);
+              }
+           });
+        });
+
+        $("#tag_name").on("input propertychange", function () {
+           var _tag_name = $(this).val();
+           if ("undefined" != _tag_name && "" != _tag_name && null != _tag_name) {
+               revertBack("confirm_update", "更新");
+           }
+        });
+
+        <!-- -->
+        <!-- listen on delete button -->
+        <!-- -->
+        <!-- when delete button clicked -->
+        $("#group tbody").on("click", 'a.btn-danger', function () {
+            $("#tag_id").attr("value", $(this).attr("value"));
+            $("#confirm_dialog").appendTo(_parent_body);
+            $("#confirm_dialog").modal("toggle");
+        });
+
+        $("#confirm_delete").on('click', function () {
+           var _tag_id = $("#tag_id").val();
+           $.ajax({
+              type: "DELETE",
+              url: "/groups/" + _tag_id,
+              beforeSend: function () {
+                  $("#confirm_delete").attr("disabled", "disabled");
+                  $("#confirm_delete").html("处理中...");
+              },
+              success: function (data) {
+                  revertBack("confirm_delete", "删除");
+                  console.log(data);
+                  $("#confirm_dialog").modal("hide");
+                  group.ajax.reload();
+              },
+              error: function (data) {
+                  console.error("Failed to process the request, with error: " + data.responseText);
+                  revertBack("confirm_delete", "删除");
+              }
+           }); // end of confirm action
+
+           $("#confirm_cancel").on("click", function () {
+                revertBack("confirm_delete", "删除");
+           });
+
+            $("#edit_cancel").on("click", function () {
+                revertBack("confirm_update", "删除");
+            });
+
+        });
+    });
+</script>
+</body>
+</html>

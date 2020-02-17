@@ -12,40 +12,22 @@ import org.springframework.stereotype.Component;
 @Component
 @ConfigurationProperties(prefix = "zero.web")
 public class ZeroWebConfig {
-    private String token;
-    private String appId;
-    private String aesKey;
-    private String appSecret;
+    private String wechatAccount;
+    private boolean debug;
 
-    public String getToken() {
-        return token;
+    public String getWechatAccount() {
+        return wechatAccount;
     }
 
-    public void setToken(String token) {
-        this.token = token;
+    public void setWechatAccount(final String wechatAccount) {
+        this.wechatAccount = wechatAccount;
     }
 
-    public String getAppId() {
-        return appId;
+    public boolean isDebug() {
+        return debug;
     }
 
-    public void setAppId(String appId) {
-        this.appId = appId;
-    }
-
-    public String getAesKey() {
-        return aesKey;
-    }
-
-    public void setAesKey(String aesKey) {
-        this.aesKey = aesKey;
-    }
-
-    public String getAppSecret() {
-        return appSecret;
-    }
-
-    public void setAppSecret(String appSecret) {
-        this.appSecret = appSecret;
+    public void setDebug(boolean debug) {
+        this.debug = debug;
     }
 }

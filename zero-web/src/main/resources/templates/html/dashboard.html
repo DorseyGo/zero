@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no"
+          name="viewport">
+    <title>Dashboard &mdash; Zero</title>
+</head>
+
+<body>
+<div>
+    <section class="section">
+        <h1 class="section-header">
+            <div>仪表盘</div>
+        </h1>
+        <div class="row">
+            <div class="col-lg-3 col-md-6 col-12">
+                <div class="card card-sm-3">
+                    <div class="card-icon bg-primary">
+                        <i class="ion ion-person"></i>
+                    </div>
+                    <div class="card-wrap">
+                        <div class="card-header">
+                            <h4>粉丝数</h4>
+                        </div>
+                        <div class="card-body">
+                            10
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-12">
+                <div class="card card-sm-3">
+                    <div class="card-icon bg-danger">
+                        <i class="ion ion-ios-paper-outline"></i>
+                    </div>
+                    <div class="card-wrap">
+                        <div class="card-header">
+                            <h4>自定义菜单数</h4>
+                        </div>
+                        <div class="card-body">
+                            42
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-12">
+                <div class="card card-sm-3">
+                    <div class="card-icon bg-warning">
+                        <i class="ion ion-ios-chatboxes-outline"></i>
+                    </div>
+                    <div class="card-wrap">
+                        <div class="card-header">
+                            <h4>消息数</h4>
+                        </div>
+                        <div class="card-body">
+                            1,201
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-12">
+                <div class="card card-sm-3">
+                    <div class="card-icon bg-success">
+                        <i class="ion ion-record"></i>
+                    </div>
+                    <div class="card-wrap">
+                        <div class="card-header">
+                            <h4>Online Users</h4>
+                        </div>
+                        <div class="card-body">
+                            47
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-8 col-md-12 col-12 col-sm-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="float-right">
+                            <div class="btn-group">
+                                <a href="#" class="btn active">Week</a>
+                                <a href="#" class="btn">Month</a>
+                                <a href="#" class="btn">Year</a>
+                            </div>
+                        </div>
+                        <h4>Statistics</h4>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="myChart" height="158"></canvas>
+                        <div class="statistic-details mt-sm-4">
+                            <div class="statistic-details-item">
+                                <small class="text-muted"><span class="text-primary"><i
+                                        class="ion-arrow-up-b"></i></span> 7%
+                                </small>
+                                <div class="detail-value">$243</div>
+                                <div class="detail-name">Today's Sales</div>
+                            </div>
+                            <div class="statistic-details-item">
+                                <small class="text-muted"><span class="text-danger"><i
+                                        class="ion-arrow-down-b"></i></span> 23%
+                                </small>
+                                <div class="detail-value">$2,902</div>
+                                <div class="detail-name">This Week's Sales</div>
+                            </div>
+                            <div class="statistic-details-item">
+                                <small class="text-muted"><span class="text-primary"><i
+                                        class="ion-arrow-up-b"></i></span>9%
+                                </small>
+                                <div class="detail-value">$12,821</div>
+                                <div class="detail-name">This Month's Sales</div>
+                            </div>
+                            <div class="statistic-details-item">
+                                <small class="text-muted"><span class="text-primary"><i
+                                        class="ion-arrow-up-b"></i></span> 19%
+                                </small>
+                                <div class="detail-value">$92,142</div>
+                                <div class="detail-name">This Year's Sales</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-12 col-12 col-sm-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Recent Activities</h4>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-unstyled list-unstyled-border">
+                            <li class="media">
+                                <img class="mr-3 rounded-circle" width="50" src="../dist/img/avatar/avatar-1.jpeg"
+                                     alt="avatar">
+                                <div class="media-body">
+                                    <div class="float-right">
+                                        <small>10m</small>
+                                    </div>
+                                    <div class="media-title">Farhan A Mujib</div>
+                                    <small>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante
+                                        sollicitudin.
+                                    </small>
+                                </div>
+                            </li>
+                            <li class="media">
+                                <img class="mr-3 rounded-circle" width="50" src="../dist/img/avatar/avatar-2.jpeg"
+                                     alt="avatar">
+                                <div class="media-body">
+                                    <div class="float-right">
+                                        <small>10m</small>
+                                    </div>
+                                    <div class="media-title">Ujang Maman</div>
+                                    <small>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante
+                                        sollicitudin.
+                                    </small>
+                                </div>
+                            </li>
+                            <li class="media">
+                                <img class="mr-3 rounded-circle" width="50" src="../dist/img/avatar/avatar-3.jpeg"
+                                     alt="avatar">
+                                <div class="media-body">
+                                    <div class="float-right">
+                                        <small>10m</small>
+                                    </div>
+                                    <div class="media-title">Rizal Fakhri</div>
+                                    <small>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante
+                                        sollicitudin.
+                                    </small>
+                                </div>
+                            </li>
+                            <li class="media">
+                                <img class="mr-3 rounded-circle" width="50" src="../dist/img/avatar/avatar-4.jpeg"
+                                     alt="avatar">
+                                <div class="media-body">
+                                    <div class="float-right">
+                                        <small>10m</small>
+                                    </div>
+                                    <div class="media-title">Alfa Zulkarnain</div>
+                                    <small>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante
+                                        sollicitudin.
+                                    </small>
+                                </div>
+                            </li>
+                        </ul>
+                        <div class="text-center">
+                            <a href="#" class="btn btn-primary btn-round">
+                                View All
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<script>
+    var ctx = document.getElementById("myChart").getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+            datasets: [{
+                label: 'Statistics',
+                data: [460, 458, 330, 502, 430, 610, 488],
+                borderWidth: 2,
+                backgroundColor: 'rgb(87,75,144)',
+                borderColor: 'rgb(87,75,144)',
+                borderWidth: 2.5,
+                pointBackgroundColor: '#ffffff',
+                pointRadius: 4
+            }]
+        },
+        options: {
+            legend: {
+                display: false
+            },
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true,
+                        stepSize: 150
+                    }
+                }],
+                xAxes: [{
+                    gridLines: {
+                        display: false
+                    }
+                }]
+            },
+        }
+    });
+</script>
+</body>
+</html>

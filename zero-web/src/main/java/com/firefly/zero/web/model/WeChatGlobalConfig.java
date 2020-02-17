@@ -13,7 +13,7 @@ import java.util.Date;
  */
 public class WeChatGlobalConfig {
 
-    private int id;
+    private String wechatAccount;
     private String appId;
     private String appSecret;
     private String encodingAESKey;
@@ -27,23 +27,12 @@ public class WeChatGlobalConfig {
         // empty
     }
 
-    /**
-     * Constructor of {@link WeChatGlobalConfig}, with app id, secret, encoding AES key and token specified.
-     */
-    public WeChatGlobalConfig(final String appId, final String appSecret, final String encodingAESKey,
-            final String token) {
-        this.appId = appId;
-        this.appSecret = appSecret;
-        this.encodingAESKey = encodingAESKey;
-        this.token = token;
+    public String getWechatAccount() {
+        return wechatAccount;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
+    public void setWechatAccount(final String wechatAccount) {
+        this.wechatAccount = wechatAccount;
     }
 
     public String getAppId() {
@@ -93,7 +82,8 @@ public class WeChatGlobalConfig {
 
         WeChatGlobalConfig that = (WeChatGlobalConfig) o;
 
-        if (id != that.id) return false;
+        if (wechatAccount != null ? !wechatAccount.equals(that.wechatAccount) : that.wechatAccount != null)
+            return false;
         if (appId != null ? !appId.equals(that.appId) : that.appId != null) return false;
         if (appSecret != null ? !appSecret.equals(that.appSecret) : that.appSecret != null) return false;
         if (encodingAESKey != null ? !encodingAESKey.equals(that.encodingAESKey) : that.encodingAESKey != null)
@@ -104,7 +94,7 @@ public class WeChatGlobalConfig {
 
     @Override
     public int hashCode() {
-        int result = id;
+        int result = (wechatAccount != null) ? wechatAccount.hashCode() : 0;
         result = 31 * result + (appId != null ? appId.hashCode() : 0);
         result = 31 * result + (appSecret != null ? appSecret.hashCode() : 0);
         result = 31 * result + (encodingAESKey != null ? encodingAESKey.hashCode() : 0);
@@ -116,7 +106,7 @@ public class WeChatGlobalConfig {
     @Override
     public String toString() {
         return "WeChatGlobalConfig{" +
-                "id=" + id +
+                "wechatAccount=" + wechatAccount +
                 ", appId='" + appId + '\'' +
                 ", appSecret='" + appSecret + '\'' +
                 ", encodingAESKey='" + encodingAESKey + '\'' +

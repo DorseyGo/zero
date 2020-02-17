@@ -25,7 +25,7 @@ public class WeChatGlobalConfigServiceImpl implements WeChatGlobalConfigService 
     }
 
     @Override
-    public WeChatGlobalConfig getWechatGlobalConfig() {
-        return weChatGlobalConfigDao.query();
+    public WeChatGlobalConfig getWechatGlobalConfig(final String wechatAccount) {
+        return weChatGlobalConfigDao.queryByWeChatAccount(wechatAccount);
     }
 }

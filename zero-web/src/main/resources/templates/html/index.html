@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+  <meta charset="UTF-8">
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no" name="viewport">
+  <title>Dashboard &mdash; Zero</title>
+
+  <link rel="stylesheet" th:href="@{/static/modules/bootstrap/css/bootstrap.css}">
+  <link rel="stylesheet" th:href="@{/static/modules/datatables/DataTables-1.10.16/css/dataTables.bootstrap.min.css}">
+  <link rel="stylesheet" th:href="@{/static/modules/datatables/DataTables-1.10.20/css/datatables.min.css}">
+  <link rel="stylesheet" th:href="@{/static/modules/datatables/Select-1.2.4/css/select.bootstrap.min.css}">
+  <link rel="stylesheet" th:href="@{/static/modules/ionicons/css/ionicons.min.css}">
+  <link rel="stylesheet" th:href="@{/static/modules/fontawesome/web-fonts-with-css/css/fontawesome-all.min.css}">
+  <link rel="stylesheet" th:href="@{/static/modules/summernote/summernote-lite.css}">
+  <link rel="stylesheet" th:href="@{/static/modules/flag-icon-css/css/flag-icon.min.css}">
+  <link rel="stylesheet" th:href="@{/static/css/demo.css}">
+  <link rel="stylesheet" th:href="@{/static/css/style.css}">
+
+    <script th:src="@{/static/modules/jquery.min.js}"></script>
+    <script th:src="@{/static/modules/popper.js}"></script>
+    <script th:src="@{/static/modules/tooltip.js}"></script>
+    <script th:src="@{/static/modules/bootstrap/js/bootstrap.js}"></script>
+    <!--<script th:src="@{/static/modules/datatables/DataTables-1.10.16/js/jquery.dataTables.js}"></script>-->
+    <script th:src="@{/static/modules/datatables/DataTables-1.10.20/js/datatables.min.js}"></script>
+    <script th:src="@{/static/modules/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.js}"></script>
+    <script th:src="@{/static/modules/datatables/Select-1.2.4/js/dataTables.select.js}"></script>
+    <script th:src="@{/static/modules/nicescroll/jquery.nicescroll.min.js}"></script>
+    <script th:src="@{/static/modules/scroll-up-bar/dist/scroll-up-bar.min.js}"></script>
+    <script th:src="@{/static/js/sa-functions.js}"></script>
+
+    <script th:src="@{/static/modules/chart.min.js}"></script>
+    <script th:src="@{/static/modules/summernote/summernote-lite.js}"></script>
+</head>
+
+<body>
+  <div id="app">
+    <div class="main-wrapper">
+      <div class="navbar-bg"></div>
+      <nav class="navbar navbar-expand-lg main-navbar">
+        <form class="form-inline mr-auto">
+          <ul class="navbar-nav mr-3">
+            <li><a href="#" data-toggle="sidebar" class="nav-link nav-link-lg"><i class="ion ion-navicon-round"></i></a></li>
+            <li><a href="#" data-toggle="search" class="nav-link nav-link-lg d-sm-none"><i class="ion ion-search"></i></a></li>
+          </ul>
+        </form>
+        <ul class="navbar-nav navbar-right">
+          <li class="dropdown dropdown-list-toggle"><a href="#" data-toggle="dropdown" class="nav-link notification-toggle nav-link-lg beep"><i class="ion ion-ios-bell-outline"></i></a>
+            <div class="dropdown-menu dropdown-list dropdown-menu-right">
+              <div class="dropdown-header">通知
+                <div class="float-right">
+                  <a href="#">View All</a>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li class="dropdown"><a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg">
+            <i class="ion ion-android-person d-lg-none"></i>
+            <div class="d-sm-none d-lg-inline-block" sec:authentication="name"></div></a>
+            <div class="dropdown-menu dropdown-menu-right">
+              <a th:href="@{/user/profile}" class="dropdown-item has-icon">
+                <i class="ion ion-android-person"></i> 隐私
+              </a>
+              <a th:href="@{/logout}" class="dropdown-item has-icon">
+                <i class="ion ion-log-out"></i> 登出
+              </a>
+            </div>
+          </li>
+        </ul>
+      </nav>
+      <div class="main-sidebar">
+        <aside id="sidebar-wrapper">
+          <div class="sidebar-brand">
+            <a th:href="@{/index}">Zero Admin</a>
+          </div>
+          <div class="sidebar-user">
+            <div class="sidebar-user-picture">
+              <img alt="image" th:src="@{/static/img/avatar/avatar-1.jpeg}">
+            </div>
+            <div class="sidebar-user-details">
+                <div class="user-name" sec:authentication="name"></div>
+                <div class="user-role" th:text="${#strings.substring(#authentication.principal.authorities,
+                    #strings.indexOf(#authentication.principal.authorities, '_') + 1, #strings.length(#authentication.principal.authorities) - 1)}"></div>
+            </div>
+          </div>
+          <ul class="sidebar-menu">
+            <li class="menu-header">仪表盘</li>
+            <li class="active">
+              <a href="#" th:value="@{/dashboard}"><i class="ion ion-speedometer"></i><span>仪表盘</span></a>
+            </li>
+
+            <li class="menu-header">组件</li>
+            <li>
+              <a href="#" class="has-dropdown"><i class="ion ion-person-stalker"></i><span>粉丝管理</span></a>
+              <ul class="menu-dropdown">
+                <li><a href="#" th:value="@{/fans}"><i class="ion ion-person"></i>粉丝信息</a></li>
+                <li><a href="#" th:value="@{/group}"><i class="ion ion-briefcase"></i> 分组管理</a></li>
+              </ul>
+            </li>
+            <li>
+              <a href="#" class="has-dropdown"><i class="ion ion-ios-list-outline"></i><span>自定义菜单管理</span></a>
+              <ul class="menu-dropdown">
+                <li><a href="#" th:value="@{/menu}"><i class="ion ion-grid"></i> 菜单列表 </a></li>
+              </ul>
+            </li>
+              <li>
+                  <a href="#" class="has-dropdown"><i class="ion ion-chatbubbles"></i><span>消息管理</span></a>
+                  <ul class="menu-dropdown">
+                      <li><a href="#" th:value="@{/message}"><i class="ion ion-grid"></i>消息列表</a></li>
+                      <li><a href="#" th:value="@{/sendings}"><i class="ion ion-chatbox-working"></i>分组群发</a></li>
+                  </ul>
+              </li>
+              <li>
+                  <a href="#" class="has-dropdown"><i class="ion ion-images"></i><span>素材管理</span></a>
+                  <ul class="menu-dropdown">
+                      <li><a href="#" th:value="@{/images}"><i class="ion ion-image"></i>图片管理</a></li>
+                      <li><a href="#" th:value="@{/videos}"><i class="ion ion-paintbucket"></i>图文管理</a></li>
+                  </ul>
+              </li>
+          </ul>
+        </aside>
+      </div>
+      <div class="main-content" id="main-content">
+      </div>
+      <footer class="main-footer">
+        <div class="footer-center">
+            Copyright &copy; 2020 ZERO
+            <div class="footer-right"></div>
+        </div>
+      </footer>
+    </div>
+  </div>
+
+  <script th:src="@{/static/js/scripts.js}"></script>
+  <script th:src="@{/static/js/custom.js}"></script>
+  <script th:src="@{/static/js/demo.js}"></script>
+
+  <script>
+      $(function() {
+          $("#main-content").load("/dashboard");
+
+          $("ul.menu-dropdown li a").on("click", function() {
+              var _url = $(this).attr("value");
+              console.log(_url);
+              $("#main-content").load(_url);
+          })
+
+      });
+  </script>
+</body>
+</html>

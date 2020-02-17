@@ -8,14 +8,13 @@ package com.firefly.zero.web.dao;
 
 import com.firefly.zero.web.model.WeChatAccessToken;
 import com.google.common.base.Strings;
-import org.apache.ibatis.annotations.InsertProvider;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.SelectProvider;
-import org.apache.ibatis.annotations.UpdateProvider;
+import org.apache.ibatis.annotations.*;
 import org.apache.ibatis.jdbc.SQL;
+import org.apache.ibatis.type.JdbcType;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 @Repository("weChatAccessTokenDao")
 public interface WeChatAccessTokenDao {
@@ -24,25 +23,35 @@ public interface WeChatAccessTokenDao {
     void save(@Param("wechatAccessToken") final WeChatAccessToken weChatAccessToken);
 
     @UpdateProvider(type = WeChatAccessTokenSqlProvider.class, method = "updateAccessToken")
-    void updateAccessToken(@Param("uuid") final String uuid, @Param("accessToken") final String accessToken);
+    void updateAccessToken(@Param("wechatAccount") final String wechatAccount, @Param("accessToken") final String accessToken);
 
-    @SelectProvider(type = WeChatAccessTokenSqlProvider.class, method = "queryForList")
-    List<WeChatAccessToken> queryForList();
+    @Results(id = "wechatAccessTokenRM", value = {
+            @Result(column = "wechat_account", property = "wechatAccount", jdbcType = JdbcType.VARCHAR),
+            @Result(column = "access_token", property = "accessToken", jdbcType = JdbcType.VARCHAR),
+            @Result(column = "create_time", property = "createTime", jdbcType = JdbcType.TIMESTAMP),
+            @Result(column = "last_modified_time", property = "lastModifiedTime", jdbcType = JdbcType.TIMESTAMP)
+    })
+    @SelectProvider(type = WeChatAccessTokenSqlProvider.class, method = "queryByAccount")
+    WeChatAccessToken queryByAccount(@Param("wechatAccount") final String wechatAccount);
 
-
+    // ~~~ SQL provider
+    // ------------------------------------------------------------------------------------
+    /**
+     * The SQL provider for <tt>WeChatAccessToken</tt>.
+     */
     class WeChatAccessTokenSqlProvider {
         private static final String TABLE_NAME = "wechat_access_token";
 
-        public String updateAccessToken(final String uuid, final String accessToken) {
+        public String updateAccessToken(final Map<String, Object> params) {
             return new SQL() {
                 {
                     UPDATE(TABLE_NAME);
 
-                    if (!Strings.isNullOrEmpty(accessToken)) {
+                    if (params.get("accessToken") != null) {
                         SET("access_token = #{accessToken}");
                     }
 
-                    WHERE("uuid = #{uuid}");
+                    WHERE("wechat_account = #{wechatAccount}");
                 }
 
             }.toString();
@@ -53,8 +62,8 @@ public interface WeChatAccessTokenDao {
                 {
                     INSERT_INTO(TABLE_NAME);
 
-                    if (!Strings.isNullOrEmpty(weChatAccessToken.getUuid())) {
-                        VALUES("uuid", "#uuid");
+                    if (!Strings.isNullOrEmpty(weChatAccessToken.getWechatAccount())) {
+                        VALUES("wechat_account", "#{wechatAccount}");
                     }
 
                     if (!Strings.isNullOrEmpty(weChatAccessToken.getAccessToken())) {
@@ -72,12 +81,14 @@ public interface WeChatAccessTokenDao {
             }.toString();
         }
 
-        public String queryForList() {
+        public String queryByAccount(final Map<String, Object> params) {
             return new SQL() {
                 {
                     SELECT("*");
 
                     FROM(TABLE_NAME);
+
+                    WHERE("wechat_account = #{wechatAccount}");
                 }
             }.toString();
         }

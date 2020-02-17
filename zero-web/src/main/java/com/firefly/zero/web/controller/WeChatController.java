@@ -6,6 +6,7 @@
  */
 package com.firefly.zero.web.controller;
 
+import com.firefly.zero.web.config.ZeroWebConfig;
 import com.firefly.zero.web.model.WeChatGlobalConfig;
 import com.firefly.zero.web.service.WeChatGlobalConfigService;
 import com.google.common.base.Preconditions;
@@ -25,11 +26,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class WeChatController {
 
     private final WeChatGlobalConfigService weChatGlobalConfigService;
+    private final ZeroWebConfig zeroWebConfig;
 
     @Autowired
     public WeChatController(
-            @Qualifier("wechatGlobalConfigService") final WeChatGlobalConfigService weChatGlobalConfigService) {
+            @Qualifier("wechatGlobalConfigService") final WeChatGlobalConfigService weChatGlobalConfigService,
+            final ZeroWebConfig zeroWebConfig) {
         this.weChatGlobalConfigService = weChatGlobalConfigService;
+        this.zeroWebConfig = zeroWebConfig;
     }
 
     @ResponseBody
@@ -38,7 +42,8 @@ public class WeChatController {
             @RequestParam("timestamp") final String timestamp, @RequestParam("nonce") final String nonce,
             @RequestParam(value = "echostr", required = false) final String echo) {
 
-        final WeChatGlobalConfig config = weChatGlobalConfigService.getWechatGlobalConfig();
+        final WeChatGlobalConfig config = weChatGlobalConfigService
+                .getWechatGlobalConfig(zeroWebConfig.getWechatAccount());
         Preconditions.checkState(config != null, "No WeChat configuration found");
         final WxMpInMemoryConfigStorage storage = new WxMpInMemoryConfigStorage();
         storage.setToken(config.getToken());
