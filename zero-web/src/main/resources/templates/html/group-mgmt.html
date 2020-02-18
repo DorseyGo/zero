@@ -22,6 +22,38 @@
                             <h4>分组列表</h4>
                         </div>
                         <div class="card-body">
+                            <form>
+                                <div class="row">
+                                    <div class="form-group col-6">
+                                        <label for="start_time">起始时间</label>
+                                        <div class="input-group date" id="start_time" data-target-input="nearest">
+                                            <input type="text" name="start_time" class="form-control datetimepicker-input" data-target="#start_time">
+                                            <div class="input-group-append" data-target="#start_time" data-toggle="datetimepicker">
+                                                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-6">
+                                        <label for="end_time">结束时间</label>
+                                        <div class="input-group date" id="end_time" data-target-input="nearest">
+                                            <input type="text" name="end_time" class="form-control datetimepicker-input" data-target="#end_time">
+                                            <div class="input-group-append" data-target="#end_time" data-toggle="datetimepicker">
+                                                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                    <div class="form-group">
+                                        <label for="name">组名称</label>
+                                        <input type="text" id="name" name="name" placeholder="组名称 模糊匹配" class="form-control">
+                                    </div>
+                                <div class="form-group">
+                                    <button type="button" id="search" class="btn btn-sm btn-info">
+                                        <i class="ion ion-search"></i>&nbsp;<span>查询</span>
+                                    </button>
+                                </div>
+                            </form>
+
                             <div class="table-responsive">
                                 <table id="group" class="table table-striped table-hover">
                                     <thead>
@@ -119,6 +151,29 @@
 <script>
     $(function() {
         var _parent_body = $(window.top.document.body);
+
+        $("#start_time").datetimepicker({
+            format: "YYYY-MM-DD HH:mm:ss",
+            focusOnShow: true,
+            buttons: {
+                showToday: true,
+                showClear: true,
+                showClose: true
+            }
+        });
+
+        $("#end_time").datetimepicker({
+            format: 'YYYY-MM-DD HH:mm:ss',
+            locale: 'zh-cn',
+            focusOnShow: true,
+            useCurrent: true,
+            buttons: {
+                showToday: true,
+                showClear: true,
+                showClose: true
+            }
+        });
+
         var group = $("#group").DataTable({
             "destroy": true,
             "lengthMenu": [10, 20, 50],
@@ -135,6 +190,22 @@
             "ajax": {
                 "type": "POST",
                 "url": "/groups",
+                "data": function (dt) {
+                    var start_time = $("#start_time input:eq(0)").val();
+                    if (start_time != '' && 'undefined' != start_time && start_time != null) {
+                        dt.start_time = start_time;
+                    }
+
+                    var end_time = $("#end_time input:eq(0)").val();
+                    if (end_time != '' && 'undefined' != end_time && end_time != null) {
+                        dt.end_time = end_time;
+                    }
+
+                    var name = $("#name").val();
+                    if (name != '' && 'undefined' != name && name != null) {
+                        dt.name = name;
+                    }
+                }
             },
             "columns": [
                 {data: "id"},
@@ -194,6 +265,13 @@
                     }
                 }
             ]
+        });
+
+        <!-- -->
+        <!-- add listener for search button -->
+        <!-- -->
+        $("#search").on("click", function () {
+           group.ajax.reload();
         });
 
         <!-- -->

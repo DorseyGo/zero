@@ -10,6 +10,8 @@ import com.firefly.zero.web.exception.ApiInvocationException;
 import com.firefly.zero.web.model.Group;
 import com.firefly.zero.web.model.Pagination;
 
+import java.util.Date;
+
 public interface GroupService {
     Group getGroupById(final long id);
 
@@ -17,7 +19,7 @@ public interface GroupService {
 
     void updateGroup(final long id, final String name) throws ApiInvocationException;
 
-    Pagination<Group> paginate(int offset, int pageSize);
+    Pagination<Group> paginate(String name, Date startTime, Date endTime, int offset, int pageSize);
 
     void saveGroup(final String name) throws ApiInvocationException;
 }

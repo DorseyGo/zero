@@ -9,6 +9,7 @@ package com.firefly.zero.web.service.impl;
 import com.firefly.zero.web.api.WeChatGroupApi;
 import com.firefly.zero.web.dao.GroupDao;
 import com.firefly.zero.web.exception.ApiInvocationException;
+import com.firefly.zero.web.model.Constants;
 import com.firefly.zero.web.model.Group;
 import com.firefly.zero.web.model.Pagination;
 import com.firefly.zero.web.request.CreateGroupRequest;
@@ -26,6 +27,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 
 @Transactional
@@ -84,15 +86,21 @@ public class GroupServiceImpl implements GroupService {
     }
 
     @Override
-    public Pagination<Group> paginate(int offset, int pageSize) {
-        final int totalRecords = groupDao.count();
+    public Pagination<Group> paginate(String name, Date startTime, Date endTime, int offset, int pageSize) {
+        name = appendWildCardIfPossible(name);
+        final int totalRecords = groupDao.count(name, startTime, endTime);
         if (totalRecords == 0) {
             return new Pagination<>();
         }
 
         final int curPage = (offset / pageSize) + 1;
-        final List<Group> groups = groupDao.queryForSubList(offset, pageSize);
+        final List<Group> groups = groupDao.queryForSubList(name, startTime, endTime, offset, pageSize);
         return new Pagination<>(curPage, pageSize, totalRecords, groups);
+    }
+
+    private String appendWildCardIfPossible(String name) {
+        return (name == null) ? null :
+                (name.endsWith(Constants.PERCENTAGE) ? name : (name + Constants.PERCENTAGE));
     }
 
 }

@@ -9,6 +9,7 @@ package com.firefly.zero.web.controller;
 import com.firefly.zero.web.Response.Response;
 import com.firefly.zero.web.exception.ApiInvocationException;
 import com.firefly.zero.web.model.Group;
+import com.firefly.zero.web.model.PaginateGroupRequest;
 import com.firefly.zero.web.model.Pagination;
 import com.firefly.zero.web.service.GroupService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.Locale;
 
 @Controller
@@ -37,9 +39,11 @@ public class GroupController {
     @RequestMapping(value = "/groups", method = RequestMethod.POST)
     public Pagination<Group> pagination(@RequestParam("start") final int offset,
             @RequestParam(value = "length", defaultValue = "10") final int pageSize,
-            @RequestParam(value = "name", required = false) final String name) {
+            @RequestParam(value = "name", required = false) final String name,
+            @RequestParam(value = "start_time", required = false) final Date startTime,
+            @RequestParam(value = "end_time", required = false) final Date endTime) {
 
-        Pagination<Group> pagination = groupService.paginate(offset, pageSize);
+        Pagination<Group> pagination = groupService.paginate(name, startTime, endTime, offset, pageSize);
 
         return pagination;
     }

@@ -13,6 +13,7 @@ import org.apache.ibatis.jdbc.SQL;
 import org.apache.ibatis.type.JdbcType;
 import org.springframework.stereotype.Repository;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -40,11 +41,15 @@ public interface GroupDao {
 
     @ResultType(Integer.class)
     @SelectProvider(type = GroupSQLProvider.class, method = "count")
-    int count();
+    int count(@Param("name") final String name, @Param("startTime") final Date startTime,
+            @Param("endTime") final Date endTime);
 
     @ResultMap("groupRM")
     @SelectProvider(type = GroupSQLProvider.class, method = "queryForSubList")
-    List<Group> queryForSubList(@Param("offset") final int offset, @Param("limit") final int limit);
+    List<Group> queryForSubList(@Param("name") final String name, @Param("startTime") final Date startTime,
+            @Param("endTime") final Date endTime,
+            @Param("offset") final int offset,
+            @Param("limit") final int limit);
 
     // ~~~ SQL provider
     // ------------------------------------------------
@@ -95,11 +100,26 @@ public interface GroupDao {
             }.toString();
         }
 
-        public String count() {
+        public String count(final Map<String, Object> params) {
             return new SQL() {
                 {
                     SELECT("COUNT(id)");
                     FROM(TABLE_NAME);
+
+                    String condition = "1 = 1";
+                    if (params.get("name") != null) {
+                        condition += " AND name LIKE #{name}";
+                    }
+
+                    if (params.get("startTime") != null) {
+                        condition += " AND create_time >= #{startTime}";
+                    }
+
+                    if (params.get("endTime") != null) {
+                        condition += " AND create_time < #{endTime}";
+                    }
+
+                    WHERE(condition);
                 }
             }.toString();
         }
@@ -109,6 +129,21 @@ public interface GroupDao {
                 {
                     SELECT("*");
                     FROM(TABLE_NAME);
+
+                    String condition = "1 = 1";
+                    if (params.get("name") != null) {
+                        condition += " AND name LIKE #{name}";
+                    }
+
+                    if (params.get("startTime") != null) {
+                        condition += " AND create_time >= #{startTime}";
+                    }
+
+                    if (params.get("endTime") != null) {
+                        condition += " AND create_time < #{endTime}";
+                    }
+                    WHERE(condition);
+
                     ORDER_BY("create_time DESC LIMIT #{offset},#{limit}");
                 }
             }.toString();
