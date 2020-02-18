@@ -71,4 +71,18 @@ public class GroupController {
 
         return response;
     }
+
+    @ResponseBody
+    @RequestMapping(value = "/group", method = RequestMethod.PUT)
+    public Response addGroup(@RequestParam("group_name") final String name) {
+        Response response = null;
+        try {
+            groupService.saveGroup(name);
+            response = Response.ok();
+        } catch (ApiInvocationException aie) {
+            response = Response.fail(String.format(Locale.ROOT, "code: %s, %s", aie.getErrorCode(), aie.getMessage()));
+        }
+
+        return response;
+    }
 }
