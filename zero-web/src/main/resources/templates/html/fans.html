@@ -17,6 +17,7 @@
             <input type="hidden" th:value="#{gender.male}" id="fans_gender_male">
             <input type="hidden" th:value="#{gender.female}" id="fans_gender_female">
             <input type="hidden" th:value="#{gender.unknown}" id="fans_gender_unknown">
+            <input type="hidden" th:value="#{refresh}" id="fans_refresh_i18n">
         </h1>
         <div class="section-body">
             <div class="row">
@@ -87,6 +88,7 @@
         var fans_gender_male_i18n = $("#fans_gender_male").val();
         var fans_gender_female_i18n = $("#fans_gender_female").val();
         var fans_gender_unknown_i18n = $("#fans_gender_unknown").val();
+        var fans_refresh_i18n = $("#fans_refresh_i18n").val();
 
         var fans = $("#fans").DataTable({
             "destroy": true,
@@ -172,7 +174,7 @@
                 }
             },
             "buttons": [ {
-                    "text": "刷新",
+                    "text": fans_refresh_i18n,
                     "attr": {
                         "class": "btn btn-sm btn-outline-info ion-android-refresh",
                     },

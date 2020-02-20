@@ -15,6 +15,8 @@
             <div th:text="#{group}">Group</div>
             <input type="hidden" th:value="#{edit}" id="group_edit_i18n">
             <input type="hidden" th:value="#{delete}" id="group_delete_i18n">
+            <input type="hidden" th:value="#{refresh}" id="group_refresh_i18n">
+            <input type="hidden" th:value="#{new}" id="group_new_i18n">
         </h1>
         <div class="section-body">
             <div class="row">
@@ -155,6 +157,8 @@
         var _parent_body = $(window.top.document.body);
         var group_edit_i18n = $("#group_edit_i18n").val();
         var group_delete_i18n = $("#group_delete_i18n").val();
+        var group_refresh_i18n = $("#group_refresh_i18n").val();
+        var group_new_i18n = $("#group_new_i18n").val();
 
         $("#start_time").datetimepicker({
             format: "YYYY-MM-DD HH:mm:ss",
@@ -243,8 +247,6 @@
                 "loading": "加载中...",
                 "processing": "处理中...",
                 "search": "搜索：",
-                "New": "新建",
-                "Refresh": "刷新",
                 "zeroRecords": "未找到匹配的数据",
                 "paginate": {
                     "first": "首页",
@@ -254,7 +256,7 @@
                 }
             },
             "buttons": [ {
-                    "text": "New",
+                    "text": group_new_i18n,
                     "attr": {
                         "class": "btn btn-sm btn-outline-primary ion-android-add-circle"
                     },
@@ -263,7 +265,7 @@
                         $("#add_dialog").modal("toggle");
                     }
                 }, {
-                    "text": "Refresh",
+                    "text": group_refresh_i18n,
                     "attr": {
                         "class": "btn btn-sm btn-outline-info ion-android-refresh"
                     },
