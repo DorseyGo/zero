@@ -5,7 +5,6 @@
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no"
           name="viewport">
     <title>Fans &rsaquo; Group &mdash; ZERO</title>
-
 </head>
 
 <body>
@@ -13,10 +12,6 @@
     <section class="section">
         <h1 class="section-header">
             <div th:text="#{group}">Group</div>
-            <input type="hidden" th:value="#{edit}" id="group_edit_i18n">
-            <input type="hidden" th:value="#{delete}" id="group_delete_i18n">
-            <input type="hidden" th:value="#{refresh}" id="group_refresh_i18n">
-            <input type="hidden" th:value="#{new}" id="group_new_i18n">
         </h1>
         <div class="section-body">
             <div class="row">
@@ -82,8 +77,8 @@
                                         <h4 class="modal-title" id="confirmModalLabel" th:text="#{confirmation}"></h4>
                                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                                     </div>
-                                    <div class="modal-body">
-                                        确认要删除？<input type="hidden" id="tag_id" class="form-control" value="" >
+                                    <div class="modal-body" th:text="#{question.confirm.delete}">
+                                        <input type="hidden" id="tag_id" class="form-control" value="" >
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-default" id="confirm_cancel" data-dismiss="modal" th:text="#{cancel}"></button>
@@ -154,48 +149,13 @@
 
 <script>
     $(function() {
+        zero.loadI18nProps();
         var _parent_body = $(window.top.document.body);
-        var group_edit_i18n = $("#group_edit_i18n").val();
-        var group_delete_i18n = $("#group_delete_i18n").val();
-        var group_refresh_i18n = $("#group_refresh_i18n").val();
-        var group_new_i18n = $("#group_new_i18n").val();
 
-        $("#start_time").datetimepicker({
-            format: "YYYY-MM-DD HH:mm:ss",
-            focusOnShow: true,
-            buttons: {
-                showToday: true,
-                showClear: true,
-                showClose: true
-            }
-        });
+        zero.dateTimePicker("#start_time");
+        zero.dateTimePicker("#end_time", {useCurrent: true});
 
-        $("#end_time").datetimepicker({
-            format: 'YYYY-MM-DD HH:mm:ss',
-            locale: 'zh-cn',
-            focusOnShow: true,
-            useCurrent: true,
-            buttons: {
-                showToday: true,
-                showClear: true,
-                showClose: true
-            }
-        });
-
-        var group = $("#group").DataTable({
-            "destroy": true,
-            "autoWidth": false,
-            "lengthMenu": [10, 20, 50],
-            "searching": false,
-            "lengthChange": true,
-            "paging": true,
-            "serverSide": true,
-            "processing": true,
-            "deferRender": true,
-            "displayStart": 0,
-            "pageLength": 10,
-            "ordering": false,
-            "dom": '<"top"B>r<"float-right"l>t<"bottom"ip><"clear">',
+        var group = zero.dataTable("#group", {
             "ajax": {
                 "type": "POST",
                 "url": "/groups",
@@ -229,34 +189,17 @@
                     "targets": -1,
                     "render": function (data, type, full, meta) {
                         var html = "<a href='javascript:void(0)' value='"+ data.id +"' class='btn btn-sm btn-primary' data-id='"+ data.id +"' data-toggle='modal' data-target='edit_dialog'>" +
-                            "<i class='ion ion-edit'></i>&nbsp;<span>" + group_edit_i18n + "</span></a>";
+                            "<i class='ion ion-edit'></i>&nbsp;<span>" + zero.getI18nProp("edit") + "</span></a>";
                         html += "&nbsp;&nbsp;";
                         html += "<a href='javascript:void(0)' value='"+ data.id + "' class='btn btn-sm btn-danger' data-toggle='modal' data-target='#confirm_dialog'>" +
-                            "<i class='ion ion-android-delete'></i>&nbsp;<span>" + group_delete_i18n + "</span></a>";
+                            "<i class='ion ion-android-delete'></i>&nbsp;<span>" + zero.getI18nProp("delete") + "</span></a>";
 
                         return html;
                     }
                 }
             ],
-            "language": {
-                "emptyTable": "没有找到任何数据",
-                "info": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
-                "infoEmpty": "显示第 0 至 0 项结果，共 0 项",
-                "lengthMenu": "显示_MENU_条",
-                "loadingRecords": "数据加载中...",
-                "loading": "加载中...",
-                "processing": "处理中...",
-                "search": "搜索：",
-                "zeroRecords": "未找到匹配的数据",
-                "paginate": {
-                    "first": "首页",
-                    "last": "尾页",
-                    "next": "下一页",
-                    "previous": "上一页"
-                }
-            },
             "buttons": [ {
-                    "text": group_new_i18n,
+                    "text": zero.getI18nProp("new"),
                     "attr": {
                         "class": "btn btn-sm btn-outline-primary ion-android-add-circle"
                     },
@@ -265,9 +208,9 @@
                         $("#add_dialog").modal("toggle");
                     }
                 }, {
-                    "text": group_refresh_i18n,
+                    "text": zero.getI18nProp("refresh"),
                     "attr": {
-                        "class": "btn btn-sm btn-outline-info ion-android-refresh"
+                        "class": "btn btn-sm btn-outline-info ion-android-refresh",
                     },
                     "action": function(e, dt, node, config) {
                         dt.ajax.reload();
@@ -321,15 +264,17 @@
               dataType: "json",
               beforeSend: function () {
                   $(this).attr("disabled", "disabled");
-                  $(this).html("处理中...");
+                  $(this).html(zero.getI18nProp("processing"));
               },
               success: function (data) {
-                  revertBack("confirm_update", "更新");
-                  $("#edit_dialog").modal("toggle");
-                  group.ajax.reload();
+                  if (data.status_code === 0) {
+                      revertBack("confirm_update", zero.getI18nProp("update"));
+                      $("#edit_dialog").modal("toggle");
+                      group.ajax.reload();
+                  }
               },
               error : function (data) {
-                  revertBack("confirm_update", "更新");
+                  revertBack("confirm_update", zero.getI18nProp("update"));
                   console.error("Failed to process the request, with error: " + data.responseText);
               }
            });
@@ -338,7 +283,7 @@
         $("#tag_name").on("input propertychange", function () {
            var _tag_name = $(this).val();
            if ("undefined" != _tag_name && "" != _tag_name && null != _tag_name) {
-               revertBack("confirm_update", "更新");
+               revertBack("confirm_update", zero.getI18nProp("update"));
            }
         });
 
@@ -359,17 +304,17 @@
               url: "/groups/" + _tag_id,
               beforeSend: function () {
                   $("#confirm_delete").attr("disabled", "disabled");
-                  $("#confirm_delete").html("处理中...");
+                  $("#confirm_delete").html(zero.getI18nProp("processing"));
               },
               success: function (data) {
-                  revertBack("confirm_delete", "删除");
+                  revertBack("confirm_delete", zero.getI18nProp("delete"));
                   console.log(data);
                   $("#confirm_dialog").modal("hide");
                   group.ajax.reload();
               },
               error: function (data) {
                   console.error("Failed to process the request, with error: " + data.responseText);
-                  revertBack("confirm_delete", "删除");
+                  revertBack("confirm_delete", zero.getI18nProp("delete"));
               }
            }); // end of confirm action
 
@@ -390,7 +335,7 @@
                        dataType: "json",
                        beforeSend: function () {
                            $(this).attr("disabled", "disabled");
-                           $(this).html("处理中...");
+                           $(this).html(zero.getI18nProp("processing"));
                        },
                        success: function (data) {
                            if (data.status_code == 0) {
@@ -400,22 +345,22 @@
                        },
                        error: function (data) {
                            console.error("Failed to add group with name: " + _group_name + ", with error: " + data.responseText);
-                           revertBack("confirm_add", "添加");
+                           revertBack("confirm_add", zero.getI18nProp("add"));
                        }
                     });
                 }
             });
 
             $("#confirm_cancel").on("click", function () {
-                revertBack("confirm_delete", "删除");
+                revertBack("confirm_delete", zero.getI18nProp("cancel"));
             });
 
             $("#edit_cancel").on("click", function () {
-                revertBack("confirm_update", "更新");
+                revertBack("confirm_update", zero.getI18nProp("update"));
             });
 
             $("#add_cancel").on("click", function () {
-                revertBack("confirm_add", "添加");
+                revertBack("confirm_add", zero.getI18nProp("add"));
             });
         });
     });
