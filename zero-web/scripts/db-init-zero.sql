@@ -70,17 +70,40 @@ CREATE TABLE IF NOT EXISTS `user_role` (
 --
 CREATE TABLE IF NOT EXISTS `fans` (
   `open_id` VARCHAR(32) NOT NULL,
+  `subscribe` TINYINT(1) NOT NULL DEFAULT '1' COMMENT '1, for subscribed; 0 for unsubscribed',
+  `nick_name` VARCHAR(32) DEFAULT NULL COMMENT 'nick name',
+  `gender` TINYINT(1) DEFAULT '0' COMMENT '0 for unknown, 1 for male, 2 for female',
+  `city` VARCHAR(24) DEFAULT NULL,
+  `province` VARCHAR(24) DEFAULT NULL ,
+  `country` VARCHAR(24) DEFAULT NULL ,
+  `language` VARCHAR(12) DEFAULT 'zh_CN',
+  `heading_img_url` VARCHAR(255) DEFAULT NULL,
+  `subscribe_time` DATETIME DEFAULT NULL COMMENT 'last subscribe time',
+  `union_id` VARCHAR(32) DEFAULT NULL,
+  `remark` VARCHAR(32) DEFAULT NULL,
+  `subscribe_scene` VARCHAR(32) DEFAULT 'ADD_SCENE_OTHERS',
+  `qr_scene` BIGINT DEFAULT NULL ,
+  `qr_scene_desc` VARCHAR(32) DEFAULT NULL COMMENT 'customized',
   PRIMARY KEY (`open_id`)
 )ENGINE=InnoDB DEFAULT CHARSET=UTF8;
 
 --
--- fans_group
+-- group
 --
-CREATE TABLE IF NOT EXISTS `fans_group` (
+CREATE TABLE IF NOT EXISTS `group` (
   `id` BIGINT NOT NULL COMMENT 'group ID',
   `name` VARCHAR(24) NOT NULL COMMENT 'group name',
   `num_fans` INT(4) DEFAULT '0' COMMENT 'The fans under this group',
   `create_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `last_modified_time` DATETIME NOT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
+)ENGINE=InnoDB DEFAULT CHARSET=UTF8;
+
+--
+-- fans_group
+--
+CREATE TABLE IF NOT EXISTS `fans_group`(
+  `group_id` BIGINT NOT NULL COMMENT 'group ID',
+  `open_id` VARCHAR(32) NOT NULL COMMENT 'fans open id',
+  PRIMARY KEY (`group_id`, `open_id`)
 )ENGINE=InnoDB DEFAULT CHARSET=UTF8;

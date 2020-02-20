@@ -5,7 +5,7 @@
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no" name="viewport">
   <title>Admin &rsaquo; Login &mdash; Zero</title>
 
-  <link rel="stylesheet" th:href="@{/static/modules/bootstrap/css/bootstrap.min.css}">
+  <link rel="stylesheet" th:href="@{/static/modules/bootstrap/css/bootstrap.css}">
   <link rel="stylesheet" th:href="@{/static/modules/ionicons/css/ionicons.min.css}">
   <link rel="stylesheet" th:href="@{/static/modules/fontawesome/web-fonts-with-css/css/fontawesome-all.min.css}">
 
@@ -24,17 +24,17 @@
             </div>
 
             <div class="card card-primary">
-              <div class="card-header"><h4>登陆</h4></div>
+              <div class="card-header"><h4><span th:text="#{user.login}">Login</span></h4></div>
 
               <div class="card-body">
                 <form method="POST" th:action="@{/user/login}" class="needs-validation" novalidate="">
                   <div class="form-group">
-                    <label for="username">Username</label>
+                    <label for="username" th:text="#{user.username}">Username</label>
                     <input id="username" type="text" class="form-control" name="username" tabindex="1" required autofocus>
                   </div>
 
                   <div class="form-group">
-                    <label for="password" class="d-block">Password
+                    <label for="password" class="d-block" th:text="#{user.password}">Password
                       <div class="float-right">
                         <a href="forgot.html">
                           Forgot Password?
@@ -42,7 +42,7 @@
                       </div>
                     </label>
                     <input id="password" type="password" class="form-control" name="password" tabindex="2" required>
-                    <div th:if="${param.error}" class="invalid-feedback">
+                    <div th:if="${param.error}" class="invalid-feedback" th:text="#{user.error}">
                       用户名或密码错误
                     </div>
                   </div>
@@ -50,20 +50,20 @@
                   <div class="form-group">
                     <div class="custom-control custom-checkbox">
                       <input type="checkbox" name="remember" class="custom-control-input" tabindex="3" id="remember-me">
-                      <label class="custom-control-label" for="remember-me">Remember Me</label>
+                      <label class="custom-control-label" for="remember-me" th:text="#{user.remember.me}">Remember Me</label>
                     </div>
                   </div>
 
                   <div class="form-group">
-                    <button type="submit" class="btn btn-primary btn-block" tabindex="4">
-                      登陆
+                    <button type="submit" class="btn btn-primary btn-block" tabindex="4" th:text="#{user.login}">
+                      Login
                     </button>
                   </div>
                 </form>
               </div>
             </div>
-            <div class="mt-5 text-muted text-center">
-              Don't have an account? <a href="register.html">Create One</a>
+            <div class="mt-5 text-muted text-center" th:text="#{user.no.account}">
+              Don't have an account? <a href="register.html" th:text="#{user.create.one}">Create One</a>
             </div>
             <div class="simple-footer">
               Copyright &copy; Zero 2020

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no"
@@ -12,20 +12,22 @@
 <div>
     <section class="section">
         <h1 class="section-header">
-            <div>分组</div>
+            <div th:text="#{group}">Group</div>
+            <input type="hidden" th:value="#{edit}" id="group_edit_i18n">
+            <input type="hidden" th:value="#{delete}" id="group_delete_i18n">
         </h1>
         <div class="section-body">
             <div class="row">
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4>分组列表</h4>
+                            <h4 th:text="#{group.list}">Group List</h4>
                         </div>
                         <div class="card-body">
                             <form>
                                 <div class="row">
                                     <div class="form-group col-6">
-                                        <label for="start_time">起始时间</label>
+                                        <label for="start_time" th:text="#{start.time}">Start Time</label>
                                         <div class="input-group date" id="start_time" data-target-input="nearest">
                                             <input type="text" name="start_time" class="form-control datetimepicker-input" data-target="#start_time">
                                             <div class="input-group-append" data-target="#start_time" data-toggle="datetimepicker">
@@ -34,7 +36,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group col-6">
-                                        <label for="end_time">结束时间</label>
+                                        <label for="end_time" th:text="#{end.time}">End Time</label>
                                         <div class="input-group date" id="end_time" data-target-input="nearest">
                                             <input type="text" name="end_time" class="form-control datetimepicker-input" data-target="#end_time">
                                             <div class="input-group-append" data-target="#end_time" data-toggle="datetimepicker">
@@ -44,12 +46,12 @@
                                     </div>
                                 </div>
                                     <div class="form-group">
-                                        <label for="name">组名称</label>
-                                        <input type="text" id="name" name="name" placeholder="组名称 模糊匹配" class="form-control">
+                                        <label for="name" th:text="#{group.name}">Group Name</label>
+                                        <input type="text" id="name" name="name" th:placeholder="#{group.name}" class="form-control">
                                     </div>
                                 <div class="form-group">
                                     <button type="button" id="search" class="btn btn-sm btn-info">
-                                        <i class="ion ion-search"></i>&nbsp;<span>查询</span>
+                                        <i class="ion ion-search"></i>&nbsp;<span th:text="#{search}">Search</span>
                                     </button>
                                 </div>
                             </form>
@@ -58,12 +60,12 @@
                                 <table id="group" class="table table-striped table-hover">
                                     <thead>
                                         <tr>
-                                            <th>id</th>
-                                            <th>组名称</th>
-                                            <th>粉丝数量</th>
-                                            <th>创建时间</th>
-                                            <th>最后一次更新时间</th>
-                                            <th>操作</th>
+                                            <th th:text="#{id}">ID</th>
+                                            <th th:text="#{group.name}"></th>
+                                            <th th:text="#{group.num.fans}"></th>
+                                            <th th:text="#{create.time}"></th>
+                                            <th th:text="#{last.modified.time}"></th>
+                                            <th th:text="#{operation}"></th>
                                         </tr>
                                     </thead>
                                 </table>
@@ -75,15 +77,15 @@
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h4 class="modal-title" id="confirmModalLabel">提示</h4>
+                                        <h4 class="modal-title" id="confirmModalLabel" th:text="#{confirmation}"></h4>
                                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                                     </div>
                                     <div class="modal-body">
                                         确认要删除？<input type="hidden" id="tag_id" class="form-control" value="" >
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-default" id="confirm_cancel" data-dismiss="modal">取消</button>
-                                        <button type="button" class="btn btn-danger" id="confirm_delete">删除</button>
+                                        <button type="button" class="btn btn-default" id="confirm_cancel" data-dismiss="modal" th:text="#{cancel}"></button>
+                                        <button type="button" class="btn btn-danger" id="confirm_delete" th:text="#{confirm}"></button>
                                     </div>
                                 </div>
                             </div>
@@ -94,13 +96,13 @@
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h4 class="modal-title">编辑</h4>
+                                        <h4 class="modal-title" th:text="#{edit}"></h4>
                                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                                     </div>
                                     <div class="modal-body">
                                         <form>
                                             <div class="control-group">
-                                                <label for="tag_name" class="control-label">组名称</label>
+                                                <label for="tag_name" class="control-label" th:text="#{group.name}"></label>
                                                 <div class="controls">
                                                     <input name="name" id="tag_name" value="" class="form-control" placeholder="" required autofocus>
                                                 </div>
@@ -109,8 +111,8 @@
                                         </form>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-default" id="edit_cancel" data-dismiss="modal">取消</button>
-                                        <button type="button" class="btn btn-primary" id="confirm_update">更新</button>
+                                        <button type="button" class="btn btn-default" id="edit_cancel" data-dismiss="modal" th:text="#{cancel}">取消</button>
+                                        <button type="button" class="btn btn-primary" id="confirm_update" th:text="#{confirm}"></button>
                                     </div>
                                 </div>
                             </div>
@@ -121,22 +123,22 @@
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h4 class="modal-title">添加</h4>
+                                        <h4 class="modal-title" th:text="#{add}"></h4>
                                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                                     </div>
                                     <div class="modal-body">
                                         <form>
                                             <div class="control-group">
-                                                <label for="group_name" class="control-label">组名称</label>
+                                                <label for="group_name" class="control-label" th:text="#{group.name}">组名称</label>
                                                 <div class="controls">
-                                                    <input name="name" id="group_name" value="" class="form-control" placeholder="组名称" required autofocus>
+                                                    <input name="name" id="group_name" value="" class="form-control" th:placeholder="#{group.name}" required autofocus>
                                                 </div>
                                             </div>
                                         </form>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-default" id="add_cancel" data-dismiss="modal">取消</button>
-                                        <button type="button" class="btn btn-primary" id="confirm_add">添加</button>
+                                        <button type="button" class="btn btn-default" id="add_cancel" data-dismiss="modal" th:text="#{cancel}"></button>
+                                        <button type="button" class="btn btn-primary" id="confirm_add" th:text="#{save}"></button>
                                     </div>
                                 </div>
                             </div>
@@ -151,6 +153,8 @@
 <script>
     $(function() {
         var _parent_body = $(window.top.document.body);
+        var group_edit_i18n = $("#group_edit_i18n").val();
+        var group_delete_i18n = $("#group_delete_i18n").val();
 
         $("#start_time").datetimepicker({
             format: "YYYY-MM-DD HH:mm:ss",
@@ -176,6 +180,7 @@
 
         var group = $("#group").DataTable({
             "destroy": true,
+            "autoWidth": false,
             "lengthMenu": [10, 20, 50],
             "searching": false,
             "lengthChange": true,
@@ -220,10 +225,10 @@
                     "targets": -1,
                     "render": function (data, type, full, meta) {
                         var html = "<a href='javascript:void(0)' value='"+ data.id +"' class='btn btn-sm btn-primary' data-id='"+ data.id +"' data-toggle='modal' data-target='edit_dialog'>" +
-                            "<i class='ion ion-android-open'></i>&nbsp;<span>编辑</span></a>";
+                            "<i class='ion ion-edit'></i>&nbsp;<span>" + group_edit_i18n + "</span></a>";
                         html += "&nbsp;&nbsp;";
                         html += "<a href='javascript:void(0)' value='"+ data.id + "' class='btn btn-sm btn-danger' data-toggle='modal' data-target='#confirm_dialog'>" +
-                            "<i class='ion ion-android-delete'></i>&nbsp;<span>删除</span></a>";
+                            "<i class='ion ion-android-delete'></i>&nbsp;<span>" + group_delete_i18n + "</span></a>";
 
                         return html;
                     }
@@ -231,13 +236,15 @@
             ],
             "language": {
                 "emptyTable": "没有找到任何数据",
-                "info": "总记录数为_TOTAL_条",
+                "info": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
+                "infoEmpty": "显示第 0 至 0 项结果，共 0 项",
                 "lengthMenu": "显示_MENU_条",
                 "loadingRecords": "数据加载中...",
                 "loading": "加载中...",
                 "processing": "处理中...",
                 "search": "搜索：",
-                "new": "新建",
+                "New": "新建",
+                "Refresh": "刷新",
                 "zeroRecords": "未找到匹配的数据",
                 "paginate": {
                     "first": "首页",
@@ -247,7 +254,7 @@
                 }
             },
             "buttons": [ {
-                    "text": "新建",
+                    "text": "New",
                     "attr": {
                         "class": "btn btn-sm btn-outline-primary ion-android-add-circle"
                     },
@@ -256,7 +263,7 @@
                         $("#add_dialog").modal("toggle");
                     }
                 }, {
-                    "text": "刷新",
+                    "text": "Refresh",
                     "attr": {
                         "class": "btn btn-sm btn-outline-info ion-android-refresh"
                     },

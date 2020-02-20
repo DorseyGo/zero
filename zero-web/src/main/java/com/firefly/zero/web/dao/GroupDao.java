@@ -54,7 +54,7 @@ public interface GroupDao {
     // ~~~ SQL provider
     // ------------------------------------------------
     class GroupSQLProvider {
-        static final String TABLE_NAME = "fans_group";
+        static final String TABLE_NAME = "`group`";
 
         public String queryById(final Map<String, Object> params) {
             return new SQL() {

@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no"
+          name="viewport">
+    <title>Fans &rsaquo; Fans &mdash; ZERO</title>
+
+</head>
+
+<body>
+<div>
+    <section class="section">
+        <h1 class="section-header">
+            <div th:text="#{fans}">Fans</div>
+            <input type="hidden" th:value="#{edit}" id="tips_fans_remark">
+            <input type="hidden" th:value="#{gender.male}" id="fans_gender_male">
+            <input type="hidden" th:value="#{gender.female}" id="fans_gender_female">
+            <input type="hidden" th:value="#{gender.unknown}" id="fans_gender_unknown">
+        </h1>
+        <div class="section-body">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4><span th:text="#{fans.list}"></span></h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table id="fans" class="table table-striped table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th th:text="#{fans.open.id}">Open Id</th>
+                                            <th th:text="#{fans.nick.name}">Nick Name</th>
+                                            <th th:text="#{fans.remark}">Remark</th>
+                                            <th th:text="#{fans.gender}">Gender</th>
+                                            <th th:text="#{fans.heading.img}">Heading Image</th>
+                                            <th th:text="#{fans.group}">Group</th>
+                                            <th th:text="#{fans.country}">Country</th>
+                                            <th th:text="#{fans.province}">Province</th>
+                                            <th th:text="#{fans.city}">City</th>
+                                            <th th:text="#{fans.subscribe.time}">Subscribe Time</th>
+                                            <th th:text="#{operation}">Operation</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- edit dialog -->
+                        <div id="edit_dialog" role="dialog" class="modal fade" tabindex="-1">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title" th:text="#{edit}"></h4>
+                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form>
+                                            <div class="control-group">
+                                                <label for="fans_remark" class="control-label" th:text="#{fans.remark}"></label>
+                                                <div class="controls">
+                                                    <input name="name" id="fans_remark" value="" class="form-control" th:placeholder="#{fans.remark}" required autofocus>
+                                                </div>
+                                            </div>
+                                            <input type="hidden" name="fans_open_id" id="fans_open_id" value="">
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" id="edit_cancel" data-dismiss="modal" th:text="#{cancel}"></button>
+                                        <button type="button" class="btn btn-primary" id="confirm_update" th:text="#{update}"></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<script>
+    $(function() {
+        var _parent_body = $(window.top.document.body);
+        var fans_remark_i18n = $("#tips_fans_remark").val();
+        var fans_gender_male_i18n = $("#fans_gender_male").val();
+        var fans_gender_female_i18n = $("#fans_gender_female").val();
+        var fans_gender_unknown_i18n = $("#fans_gender_unknown").val();
+
+        var fans = $("#fans").DataTable({
+            "destroy": true,
+            "autoWidth": false,
+            "lengthMenu": [10, 20, 50],
+            "searching": false,
+            "lengthChange": true,
+            "paging": true,
+            "serverSide": true,
+            "processing": true,
+            "deferRender": true,
+            "displayStart": 0,
+            "pageLength": 10,
+            "ordering": false,
+            "dom": '<"top"B>r<"float-right"l>t<"bottom"ip><"clear">',
+            "ajax": {
+                "type": "POST",
+                "url": "/fans",
+                "data": function (dt) {
+                }
+            },
+            "columns": [
+                {data: "openId"},
+                {data: "nickName"},
+                {data: "remark"},
+                {data: "gender"},
+                {data: "headingImgUrl"},
+                {data: "groupNames"},
+                {data: "country"},
+                {data: "province"},
+                {data: "city"},
+                {data: "subscribeTime"},
+                {data: null}
+            ],
+            "columnDefs": [
+                {
+                    "targets": -1,
+                    "render": function (data, type, full, meta) {
+                        var html = "<a href='javascript:void(0)' value='"+ full.openId +"' class='btn btn-sm btn-primary' data-id='"+ data.id +"' data-toggle='modal' data-target='edit_dialog'>" +
+                            "<i class='ion ion-edit'></i>&nbsp;<span>" + fans_remark_i18n + "</span></a>";
+
+                        return html;
+                    }
+                },
+                {
+                    "targets": 4,
+                    "render": function (data, type, full, meta) {
+                        var html = "<img alt='image' src=' "+ full.headingImgUrl +
+                            "' class='rounded-circle' width='35' data-toggle='title' title='" + full.remark + "'>";
+
+                        return html;
+                    }
+                },
+                {
+                    "targets": 3,
+                    "render": function (data, type, full, meta) {
+                        var html = "<span class='";
+                        html += ((full.gender === 1) ? "ion-man" : ((full.gender === 2) ? "ion-woman" : "ion-unknown")) + "'>";
+                        html += (full.gender === 1) ? fans_gender_male_i18n :
+                            ((full.gender === 2) ? fans_gender_female_i18n : fans_gender_unknown_i18n);
+                        html += "</span>"
+
+                        return html;
+                    }
+                }
+            ],
+            "language": {
+                "emptyTable": "没有找到任何数据",
+                "info": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
+                "infoEmpty": "显示第 0 至 0 项结果，共 0 项",
+                "lengthMenu": "显示_MENU_条",
+                "loadingRecords": "数据加载中...",
+                "loading": "加载中...",
+                "processing": "处理中...",
+                "search": "搜索：",
+                "new": "新建",
+                "zeroRecords": "未找到匹配的数据",
+                "paginate": {
+                    "first": "首页",
+                    "last": "尾页",
+                    "next": "下一页",
+                    "previous": "上一页"
+                }
+            },
+            "buttons": [ {
+                    "text": "刷新",
+                    "attr": {
+                        "class": "btn btn-sm btn-outline-info ion-android-refresh",
+                    },
+                    "action": function(e, dt, node, config) {
+                        dt.ajax.reload();
+                    }
+                }
+            ]
+        });
+
+        <!-- -->
+        <!-- buttons in each row -->
+        <!-- -->
+        $("#fans tbody").on("click", "a.btn-primary", function () {
+            var open_id = $(this).val();
+            $("#fans_open_id").attr("value", open_id);
+
+            $("#edit_dialog").modal("toggle");
+            $("#edit_dialog").appendTo(_parent_body);
+        });
+
+        <!-- -->
+        <!-- update button clicked -->
+        <!-- -->
+        $("#confirm_update").on("click", function () {
+            var open_id = $("#fans_open_id").val();
+            var remark = $("#fans_remark").val();
+
+            $.ajax({
+                type: "POST",
+                url: "/fans/" + open_id,
+                data: {
+                    remark: remark
+                },
+                dataType: "json",
+                beforeSend: function () {
+                    $(this).attr("disabled", "disabled");
+                    $(this).attr("th:text", "#{processing}")
+                },
+                success: function (data) {
+                    if (data.status_code == 0) {
+                        revertBack("confirm_update", "#{update}");
+                        $("#edit_dialog").modal("toggle");
+                        fans.ajax.reload();
+                    }
+                },
+                error: function (data) {
+                    console.error("Failed to update the remark to " + remark + ", with error " + data.responseText);
+                }
+            });
+        });
+
+        function revertBack(elem_id, th_text) {
+            $("#" + elem_id).attr("disabled", false);
+            $("#" + elem_id).attr("th:text", th_text);
+        }
+
+    });
+</script>
+</body>
+</html>

@@ -9,7 +9,6 @@ package com.firefly.zero.web.controller;
 import com.firefly.zero.web.Response.Response;
 import com.firefly.zero.web.exception.ApiInvocationException;
 import com.firefly.zero.web.model.Group;
-import com.firefly.zero.web.model.PaginateGroupRequest;
 import com.firefly.zero.web.model.Pagination;
 import com.firefly.zero.web.service.GroupService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +31,7 @@ public class GroupController {
 
     @RequestMapping(value = "/group", method = RequestMethod.GET)
     public String group() {
-        return "group-mgmt";
+        return "groups";
     }
 
     @ResponseBody
