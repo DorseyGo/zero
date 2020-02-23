@@ -76,7 +76,7 @@ CREATE TABLE IF NOT EXISTS `fans` (
   `city` VARCHAR(24) DEFAULT NULL,
   `province` VARCHAR(24) DEFAULT NULL ,
   `country` VARCHAR(24) DEFAULT NULL ,
-  `language` VARCHAR(12) DEFAULT 'zh_CN',
+  `language` VARCHAR(5) DEFAULT 'zh_CN',
   `heading_img_url` VARCHAR(255) DEFAULT NULL,
   `subscribe_time` DATETIME DEFAULT NULL COMMENT 'last subscribe time',
   `union_id` VARCHAR(32) DEFAULT NULL,
@@ -107,3 +107,33 @@ CREATE TABLE IF NOT EXISTS `fans_group`(
   `open_id` VARCHAR(32) NOT NULL COMMENT 'fans open id',
   PRIMARY KEY (`group_id`, `open_id`)
 )ENGINE=InnoDB DEFAULT CHARSET=UTF8;
+
+--
+-- menu
+--
+CREATE TABLE IF NOT EXISTS `menu` (
+  `id` INT(4) NOT NULL AUTO_INCREMENT,
+  `menu_id` VARCHAR(32) DEFAULT NULL COMMENT 'the menu id for personalized menu',
+  `type` VARCHAR(12) NOT NULL COMMENT 'the type of the button, click and view right now supported',
+  `name` VARCHAR(32) NOT NULL COMMENT 'the name of the button',
+  `key` VARCHAR(32) DEFAULT NULL COMMENT 'the key for click kind button',
+  `url` VARCHAR(255) DEFAULT NULL COMMENT 'the url for view kind button',
+  `create_time` DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT 'the create time',
+  `parent_id` INT(4) NOT NULL DEFAULT '0' COMMENT '0 for it is the root menu',
+  PRIMARY KEY (`id`)
+)ENGINE = InnoDB DEFAULT CHARSET = UTF8;
+
+--
+-- menu match rule
+--
+CREATE TABLE IF NOT EXISTS `menu_match_rule` (
+  `menu_id` VARCHAR(32) NOT NULL,
+  `group_id` BIGINT NOT NULL,
+  `gender` TINYINT(1) DEFAULT '0' COMMENT '1, for male, 2 for female, 0 for no matching',
+  `country` VARCHAR(24) DEFAULT NULL ,
+  `province` VARCHAR(24) DEFAULT NULL ,
+  `city` VARCHAR(24) DEFAULT NULL ,
+  `client_platform_type` TINYINT(1) DEFAULT '0' COMMENT '1 for ios, 2 for android, 3 for others, 0, no matching',
+  `language` VARCHAR(5) DEFAULT 'zh_CN',
+  PRIMARY KEY (`menu_id`)
+)ENGINE = InnoDB DEFAULT CHARSET = UTF8;

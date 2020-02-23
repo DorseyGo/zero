@@ -86,8 +86,7 @@ public class GroupServiceImpl implements GroupService {
     }
 
     @Override
-    public Pagination<Group> paginate(String name, Date startTime, Date endTime, int offset, int pageSize) {
-        name = appendWildCardIfPossible(name);
+    public Pagination<Group> paginate(final String name, final Date startTime, final Date endTime, final int offset, final int pageSize) {
         final int totalRecords = groupDao.count(name, startTime, endTime);
         if (totalRecords == 0) {
             return new Pagination<>();
@@ -96,11 +95,6 @@ public class GroupServiceImpl implements GroupService {
         final int curPage = (offset / pageSize) + 1;
         final List<Group> groups = groupDao.queryForSubList(name, startTime, endTime, offset, pageSize);
         return new Pagination<>(curPage, pageSize, totalRecords, groups);
-    }
-
-    private String appendWildCardIfPossible(String name) {
-        return (name == null) ? null :
-                (name.endsWith(Constants.PERCENTAGE) ? name : (name + Constants.PERCENTAGE));
     }
 
 }

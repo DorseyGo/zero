@@ -20,7 +20,7 @@ import java.util.Date;
 import java.util.Locale;
 
 @Controller
-public class GroupController {
+public class GroupController extends BasicController {
 
     private final GroupService groupService;
 
@@ -42,7 +42,8 @@ public class GroupController {
             @RequestParam(value = "start_time", required = false) final Date startTime,
             @RequestParam(value = "end_time", required = false) final Date endTime) {
 
-        Pagination<Group> pagination = groupService.paginate(name, startTime, endTime, offset, pageSize);
+        Pagination<Group> pagination = groupService
+                .paginate(appendWildCardIfPossible(name), startTime, endTime, offset, pageSize);
 
         return pagination;
     }
@@ -55,7 +56,7 @@ public class GroupController {
             groupService.deleteGroupById(id);
             response = Response.ok();
         } catch (ApiInvocationException e) {
-            response = Response.fail(String.format(Locale.ROOT,"code: %s, %s", e.getErrorCode(), e.getMessage()));
+            response = Response.fail(String.format(Locale.ROOT, "code: %s, %s", e.getErrorCode(), e.getMessage()));
         }
 
         return response;

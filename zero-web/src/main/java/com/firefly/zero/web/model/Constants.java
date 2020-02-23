@@ -10,4 +10,5 @@ public interface Constants {
     String DEFAULT_DATE_PATTERN = "yyyy-MM-dd HH:mm:ss";
     String OP_SUCCEED = "操作成功";
     String PERCENTAGE = "%";
+    String DEFAULT_TIMEZONE = "GMT+8";
 }

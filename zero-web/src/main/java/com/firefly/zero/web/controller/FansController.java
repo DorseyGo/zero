@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
-public class FansController {
+public class FansController extends BasicController {
 
     static final Logger logger = LoggerFactory.getLogger(FansController.class);
     private final FansService fansService;

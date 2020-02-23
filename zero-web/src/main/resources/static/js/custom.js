@@ -89,6 +89,11 @@ $(function () {
 
            settings = $.extend(defaultSettings, settings);
            return $(element).DataTable(settings);
+       },
+
+       activeButtonAndSetText: function (element, text) {
+           $(element).attr("disabled", false);
+           $(element).html(text);
        }
    }
 });
