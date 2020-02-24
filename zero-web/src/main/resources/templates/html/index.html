@@ -39,7 +39,6 @@
     <script th:src="@{/static/modules/summernote/summernote-lite.js}"></script>
     <script th:src="@{/static/js/scripts.js}"></script>
     <script th:src="@{/static/js/custom.js}"></script>
-    <script th:src="@{/static/js/demo.js}"></script>
 
 </head>
 
@@ -148,13 +147,13 @@
     </div>
 </div>
 
+<script th:src="@{/static/js/demo.js}"></script>
 <script>
     $(function () {
         $("#main-content").load("/dashboard");
 
         $("ul.menu-dropdown li a").on("click", function () {
             var _url = $(this).attr("value");
-            console.log(_url);
             $("#main-content").load(_url);
         })
 
