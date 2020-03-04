@@ -31,6 +31,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Resource
     private DataSource dataSource;
 
+    @Autowired
+    private ZeroWebConfig config;
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService).passwordEncoder(new BCryptPasswordEncoder());
@@ -47,7 +50,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and().csrf().disable();
 
         http.rememberMe().tokenRepository(persistentTokenRepository())
-                .tokenValiditySeconds(3600)
+                .tokenValiditySeconds(config.getRememberMeTokenValiditySecs())
                 .userDetailsService(userDetailsService);
 
         http.headers().frameOptions().sameOrigin();

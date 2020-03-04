@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 public class ZeroWebConfig {
     private String wechatAccount;
     private boolean debug;
+    private int rememberMeTokenValiditySecs;
 
     public String getWechatAccount() {
         return wechatAccount;
@@ -29,5 +30,13 @@ public class ZeroWebConfig {
 
     public void setDebug(boolean debug) {
         this.debug = debug;
+    }
+
+    public int getRememberMeTokenValiditySecs() {
+        return rememberMeTokenValiditySecs;
+    }
+
+    public void setRememberMeTokenValiditySecs(final int rememberMeTokenValiditySecs) {
+        this.rememberMeTokenValiditySecs = rememberMeTokenValiditySecs;
     }
 }
