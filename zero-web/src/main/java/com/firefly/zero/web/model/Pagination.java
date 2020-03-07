@@ -9,6 +9,7 @@ package com.firefly.zero.web.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.collect.Lists;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Pagination<T> {
@@ -27,7 +28,7 @@ public class Pagination<T> {
     private List<T> data;
 
     public Pagination() {
-        this(1, 10, 0, Lists.newArrayListWithExpectedSize(0));
+        this(1, 10, 0, new ArrayList<>(0));
     }
 
     public Pagination(final int curPage, final int pageSize, final int totalRecords, final List<T> data) {
