@@ -28,7 +28,7 @@ public class Pagination<T> {
     private List<T> data;
 
     public Pagination() {
-        this(1, 10, 0, new ArrayList<>(0));
+        this(1, 10, 0, Lists.newArrayListWithExpectedSize(0));
     }
 
     public Pagination(final int curPage, final int pageSize, final int totalRecords, final List<T> data) {
