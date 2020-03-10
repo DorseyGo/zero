@@ -1,6 +1,4 @@
-// pages/course/intro/intro.js
-const app =  getApp();
-
+// pages/auth/auth.js
 Page({
 
   /**
@@ -14,21 +12,7 @@ Page({
    * Lifecycle function--Called when page load
    */
   onLoad: function (options) {
-    wx.getSetting({
-      success: (result)=>{
-        if (!result.authSetting['scope.userInfo']) {
-          wx.redirectTo({
-            url: '/pages/auth/auth'
-          });
-        }
-      },
-      fail: ()=>{
-        console.log("Failed to get settings");
-      },
-      complete: ()=>{
-        console.log("Load completely");
-      }
-    });
+
   },
 
   /**

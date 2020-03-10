@@ -4,7 +4,7 @@
     "pages/course/apply/apply",
     "pages/course/purchase/purchase",
     "pages/course/experience/experience",
-    "pages/index/index",
+    "pages/auth/auth",
     "pages/logs/logs"
   ],
   "window": {
