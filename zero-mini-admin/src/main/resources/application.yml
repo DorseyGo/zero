@@ -1,0 +1,26 @@
+server:
+  port: 9080
+
+datasource:
+  hostname: 172.17.1.96
+  port: 3308
+
+spring:
+  output:
+    ansi:
+      enabled: always
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    url: jdbc:mysql://${datasource.hostname}:${datasource.port}/zero?characterEncoding=utf8&useUnicode=true&useSSL=false
+    username: root
+    password: engine
+    hikari:
+      connection-init-sql: SELECT 1
+      maximum-pool-size: 200
+      minimum-idle: 5
+      connection-timeout: 1800
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+  mvc:
+    static-path-pattern: /static/**

@@ -1,39 +1,9 @@
 {
   "pages": [
-    "pages/course/intro/intro",
-    "pages/course/apply/apply",
-    "pages/course/purchase/purchase",
-    "pages/course/experience/experience",
+    "pages/index/index",
     "pages/auth/auth",
     "pages/logs/logs"
   ],
-  "window": {
-    "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "WeChat",
-    "navigationBarTextStyle": "black"
-  },
-  "tabBar": {
-    "list": [{
-      "pagePath": "pages/course/intro/intro",
-      "text": "首页",
-      "iconPath": "image/home.png",
-      "selectedIconPath": "image/home1.png"
-    }, {
-      "pagePath": "pages/course/apply/apply",
-      "text": "课程报名",
-      "iconPath":"image/my.png",
-      "selectedIconPath":"image/my1.png"
-    }, {
-      "pagePath": "pages/course/purchase/purchase",
-      "text": "课程购买",
-      "iconPath": "image/goodscar.png",
-      "selectedIconPath": "image/goodscar1.png"
-    }, {
-      "pagePath":"pages/course/experience/experience",
-      "text": "课程体验"
-    }]
-  },
   "style": "v2",
   "sitemapLocation": "sitemap.json"
 }

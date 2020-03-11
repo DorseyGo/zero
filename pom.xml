@@ -10,6 +10,7 @@
   <version>1.0-SNAPSHOT</version>
   <modules>
     <module>zero-web</module>
+    <module>zero-mini-admin</module>
   </modules>
 
   <name>zero</name>
@@ -21,10 +22,20 @@
     <spring.boot.version>2.1.3.RELEASE</spring.boot.version>
     <weixin.java.tools.version>1.3.3</weixin.java.tools.version>
     <mybatis.spring.boot.version>1.3.2</mybatis.spring.boot.version>
+    <guava.version>27.0.1-jre</guava.version>
   </properties>
 
   <dependencyManagement>
     <dependencies>
+
+      <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-dependencies</artifactId>
+        <version>${spring.boot.version}</version>
+        <scope>import</scope>
+        <type>pom</type>
+      </dependency>
+
       <dependency>
         <groupId>junit</groupId>
         <artifactId>junit</artifactId>
@@ -35,7 +46,13 @@
       <dependency>
         <groupId>com.google.guava</groupId>
         <artifactId>guava</artifactId>
-        <version>27.0.1-jre</version>
+        <version>${guava.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.mybatis.spring.boot</groupId>
+        <artifactId>mybatis-spring-boot-starter</artifactId>
+        <version>${mybatis.spring.boot.version}</version>
       </dependency>
 
       <dependency>
