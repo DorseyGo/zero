@@ -1,11 +1,8 @@
 <!--index.wxml-->
 <view class="container">
-  <view class="content">
-    <!-- the content -->
-    <view class="item" style="background-color:red;"></view>
-    <view class="item" style="background-color:white;"></view>
-    <view class="item" style="background-color:yellow;"></view>
-  </view>
+  <course wx:if="{{curPage == 'course'}}"></course>
+  <intro wx:if="{{curPage == 'intro'}}"></intro>
+  <purchase wx:if="{{curPage == 'purchase'}}"></purchase>
 
   <!-- tabs -->
   <view class="tabs">

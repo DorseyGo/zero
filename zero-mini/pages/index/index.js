@@ -21,7 +21,5 @@ Page({
     }).catch(err => {
       
     })
-
-    console.log('data: ' + this.data.tabs)
   }
 })

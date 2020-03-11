@@ -1,6 +1,9 @@
 {
   "pages": [
     "pages/index/index",
+    "pages/course/course",
+    "pages/about/about",
+    "pages/purchase/purchase",
     "pages/auth/auth",
     "pages/logs/logs"
   ],

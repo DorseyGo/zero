@@ -29,6 +29,7 @@ public class Tabs implements Entity {
      */
     @JsonProperty("active")
     private short activateWhenInit;
+    private String component;
 
     private Date createTime;
     private Date lastModifiedTime;

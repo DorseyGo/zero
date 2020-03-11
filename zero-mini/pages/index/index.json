@@ -1,5 +1,9 @@
 {
-  "usingComponents": {},
+  "usingComponents": {
+    "about": "/pages/about/about",
+    "course": "/pages/course/course",
+    "purchase": "/pages/purchase/purchase"
+  },
   "navigationBarTitleText": "爱酷体育",
   "navigationBarTextStyle": "white"
 }
