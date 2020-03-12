@@ -2,7 +2,8 @@
   "usingComponents": {
     "about": "/pages/about/about",
     "course": "/pages/course/course",
-    "purchase": "/pages/purchase/purchase"
+    "purchase": "/pages/purchase/purchase",
+    "error404": "/pages/error/404/404"
   },
   "navigationBarTitleText": "爱酷体育",
   "navigationBarTextStyle": "white"

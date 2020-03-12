@@ -1,2 +1,3 @@
-<!--pages/purchase/purchase.wxml-->
-<text>pages/purchase/purchase.wxml</text>
+<view class="content">
+    <text>课程购买</text>
+</view>

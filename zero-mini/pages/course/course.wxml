@@ -1,2 +1,22 @@
-<!--pages/course/course.wxml-->
-<text>pages/course/course.wxml</text>
+<scroll-view class="content">
+    <view class="notification">
+
+    </view>
+    <view class="course">
+        <view class="tabs">
+            <view class="item" wx:for="{{courseCategories}}" wx:key="id">
+                <text>{{item.category}}</text>
+            </view>
+        </view>
+    </view>
+    <view class="brief">
+        <text>关于爱酷</text>
+    </view>
+    <view class="teacher">
+        <text>明星教师</text>
+        <view class="item">
+            <image  />
+            <text></text>
+        </view>
+    </view>
+</scroll-view>

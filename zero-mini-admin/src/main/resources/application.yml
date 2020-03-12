@@ -24,3 +24,9 @@ spring:
     time-zone: GMT+8
   mvc:
     static-path-pattern: /static/**
+
+
+zero:
+  mini:
+    admin:
+      image-server-url: http://localhost:9080/static/

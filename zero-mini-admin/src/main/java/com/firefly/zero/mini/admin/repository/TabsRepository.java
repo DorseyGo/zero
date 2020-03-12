@@ -24,9 +24,10 @@ public interface TabsRepository {
     @Results(id = "tabsRM", value = {
             @Result(property = "id", column = "id", jdbcType = JdbcType.TINYINT),
             @Result(property = "name", column = "name", jdbcType = JdbcType.VARCHAR),
-            @Result(property = "leadingImgUrl", column = "leading_img_url", jdbcType = JdbcType.VARCHAR),
+            @Result(property = "leadingImgUrl", column = "leading_img_path", jdbcType = JdbcType.VARCHAR),
             @Result(property = "activateWhenInit", column = "activate_when_init", jdbcType = JdbcType.TINYINT),
-            @Result(property = "component", column = "component", jdbcType = JdbcType.VARCHAR)
+            @Result(property = "component", column = "component", jdbcType = JdbcType.VARCHAR),
+            @Result(property = "sequence", column = "sequence", jdbcType = JdbcType.TINYINT)
     })
     @SelectProvider(type = TabsSQLProvider.class, method = "queryForAll")
     List<Tabs> queryForAll();
@@ -39,7 +40,7 @@ public interface TabsRepository {
         public String queryForAll() {
             return new SQL() {
                 {
-                    SELECT("id", "name", "leading_img_url", "activate_when_init", "component");
+                    SELECT("id", "name", "leading_img_path", "activate_when_init", "component", "sequence");
                     FROM(TABLE);
                     ORDER_BY("id");
                 }

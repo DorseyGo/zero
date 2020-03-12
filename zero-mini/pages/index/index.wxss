@@ -15,7 +15,7 @@
   display: flex;
   flex-direction: row;
   font-size: 12px;
-  height: 36px;
+  height: 72rpx;
   width: 100%;
   text-align: center;
   color: white;
@@ -24,9 +24,22 @@
 
 .tabs .item {
   flex: 1;
+  display: flex;
+  flex-direction: row;
+  justify-items: center;
   padding: 8px 0;
 }
 
 .tabs .item.active {
   border-top: 2px solid #cc0000;
+}
+
+.tabs .item image {
+  width: 40rpx;
+  height: 40rpx;
+  margin-left: 10rpx;
+}
+
+.tabs .item text {
+  margin-left: 10rpx;
 }

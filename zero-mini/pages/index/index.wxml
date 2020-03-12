@@ -1,12 +1,14 @@
 <!--index.wxml-->
 <view class="container">
   <course wx:if="{{curPage == 'course'}}"></course>
-  <intro wx:if="{{curPage == 'intro'}}"></intro>
-  <purchase wx:if="{{curPage == 'purchase'}}"></purchase>
+  <purchase wx:elif="{{curPage == 'purchase'}}"></purchase>
+  <intro wx:elif="{{curPage == 'about'}}"></intro>
+  <error404 wx:else></error404>
 
   <!-- tabs -->
   <view class="tabs">
-    <view class="item {{item.active==0?'active':''}}" wx:for="{{tabs}}" wx:key="id">
+    <view bindtap='navTo' data-cur="{{item.component}}" class="item {{item.component==curPage?'active':''}}" wx:for="{{tabs}}" wx:key="id">
+      <image wx:if="{{item.leadingImgUrl != null}}" src="{{item.leadingImgUrl}}" />
       <text>{{item.name}}</text>
     </view>
   </view>
