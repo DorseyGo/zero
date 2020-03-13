@@ -15,6 +15,7 @@ import lombok.experimental.Tolerate;
 public class CourseCategory implements Entity {
     private short id;
     private String category;
+    private short active;
 
     @Tolerate
     public CourseCategory() {}

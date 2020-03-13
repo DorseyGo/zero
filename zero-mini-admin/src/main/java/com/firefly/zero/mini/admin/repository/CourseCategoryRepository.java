@@ -22,7 +22,8 @@ public interface CourseCategoryRepository {
 
     @Results(id = "cateRM", value = {
             @Result(property = "id", column = "id", jdbcType = JdbcType.TINYINT),
-            @Result(property = "category", column = "category", jdbcType = JdbcType.VARCHAR)
+            @Result(property = "category", column = "category", jdbcType = JdbcType.VARCHAR),
+            @Result(property = "active", column = "activate_when_init", jdbcType = JdbcType.TINYINT)
     })
     @SelectProvider(type = CourseCategorySQLProvider.class, method = "queryForAll")
     List<CourseCategory> queryForAll();

@@ -2,6 +2,7 @@
   "pages": [
     "pages/index/index",
     "pages/course/course",
+    "pages/template/course/course",
     "pages/about/about",
     "pages/purchase/purchase",
     "pages/error/404/404",

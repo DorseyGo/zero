@@ -1,0 +1,13 @@
+<template name="courseItem">
+    <view class="course-item">
+        <view class="item">
+            <image mode="aspectFill" src="{{img}}" />
+        </view>
+        <view class="item">
+            <text>{{name}}</text>
+        </view>
+        <view class="item">
+            <text>{{brief}}</text>
+        </view>
+    </view>
+</template>

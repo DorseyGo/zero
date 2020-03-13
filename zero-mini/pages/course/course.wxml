@@ -1,22 +1,40 @@
-<scroll-view class="content">
+<import src="../template/course/course"></import>
+<view class="content">
     <view class="notification">
-
+        <swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
+            <block wx:for="{{notifications}}" wx:key="id">
+                <swiper-item>
+                    <image class="swiper-image" src="{{item.slide}}" />
+                </swiper-item>
+            </block>
+        </swiper>
     </view>
     <view class="course">
+        <view class="title">
+            <text>课程</text>
+        </view>
         <view class="tabs">
-            <view class="item" wx:for="{{courseCategories}}" wx:key="id">
+            <view class="item {{item.id===curCategory?'active':''}}" wx:for="{{courseCategories}}" wx:key="id">
                 <text>{{item.category}}</text>
             </view>
         </view>
+        <view class="description">
+            <navigator open-type="navigate" wx:for="{{courses}}">
+                <template is="courseItem" data="{{...item}}"></template>
+            </navigator>
+        </view>
     </view>
-    <view class="brief">
-        <text>关于爱酷</text>
+    <view class="great-moment">
+        <text>精彩瞬间</text>
+        <view>
+        
+        </view>
     </view>
-    <view class="teacher">
-        <text>明星教师</text>
+    <view class="attention">
+        <text>实时关注</text>
         <view class="item">
             <image  />
             <text></text>
         </view>
     </view>
-</scroll-view>
+</view>
