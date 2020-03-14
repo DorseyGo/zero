@@ -32,7 +32,7 @@
     </view>
     <view class="attention">
         <text>实时关注</text>
-        <view class="item">
+        <view class="item" wx:for="{{attentions}}" wx:key="id">
             <image  />
             <text></text>
         </view>

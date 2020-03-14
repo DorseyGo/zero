@@ -12,6 +12,7 @@ Component({
     interval: 500,
     courses: [],
     curCategory: 2,
+    attentions: [],
     courseCategories: []
   },
   methods: {
@@ -50,6 +51,17 @@ Component({
       })
     }).catch(err => {
       console.log(err);
+    })
+
+    // url: http://localhost:9080/api/attentions
+    request.get('/attentions').then(res => {
+      this.setData({
+        attentions: res.data
+      })
+
+      console.log(this.data.attentions)
+    }).catch(err => {
+
     })
   }
 });
